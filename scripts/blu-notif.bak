@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+if [ ! -f /tmp/blustatus ]; then
+    echo disconnected > /tmp/blustatus
+fi
+
+connected_device=$(bluetoothctl devices Connected | awk '{$1=$2=""; print $0}')
+if [[ -z $connected_device ]];then
+    echo "<big><span color='#585b70'>󰂲</span></big>"
+    if [[ $(cat /tmp/blustatus) == "connected"* ]];then
+        notify-send -t 2000 "$(cat /tmp/blustatus | awk '{$1=""; print $0}'| sed 's/^ //')" Disconnected
+        echo "disconnected" > /tmp/blustatus
+    fi
+else
+    device_id=$(bluetoothctl devices Connected | awk '{print $2}' | tr ':' '_')
+    battery=$(dbus-send --print-reply=literal --system --dest=org.bluez /org/bluez/hci0/dev_$device_id org.freedesktop.DBus.Properties.Get string:"org.bluez.Battery1" string:"Percentage" | awk '{print $3}')
+    echo "<big></big> $battery"
+    if [[ $(cat /tmp/blustatus) == "disconnected" ]];then
+        notify-send -t 2000 "$(echo $connected_device | sed 's/^ //')" Connected
+        echo "connected$connected_device" > /tmp/blustatus
+    fi
+fi
