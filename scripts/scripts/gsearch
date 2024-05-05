@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <search_query>"
+    exit 1
+fi
+
+query="$1"
+
+fetch() {
+    user_name=$(echo "$1" | awk '{print $1}')
+    repo_name=$(echo "$1" | awk '{print $2}')
+    local readme_url="https://raw.githubusercontent.com/$user_name/$repo_name/master/README.md"
+    local readme_contents=$(curl -s "$readme_url")
+    echo "$readme_contents"
+}
+# Check if the package is on GitHub
+github_url="https://api.github.com/search/repositories?q=$query"
+response=$(curl -s "$github_url")
+
+# repo_names=$(echo "$response" | jq -r '.items[].name')
+# user_names=$(echo "$response" | jq -r '.items[].owner.login')
+# stars=$(echo "$response" | jq -r '.items[].stargazers_count')
+user_names=$(echo "$response" | awk -F'"name":' 'NF>1{gsub(/[" ,]+/, "", $2); if ($2) print $2}')
+repo_names=$(echo "$response" | awk -F'"login":' 'NF>1{gsub(/[" ,]+/, "", $2); if ($2) print $2}')
+stars=$(echo "$response" | awk -F'"stargazers_count":' 'NF>1{gsub(/[" ,]+/, "", $2); if ($2) print $2}')
+
+if [ -z "$repo_names" ]; then
+    echo "No repositories found on GitHub for '$query'."
+else
+    selection=$(paste <(echo "$user_names") <(echo "$repo_names") <(echo "$stars") | fzf --layout=reverse --ansi --preview="source ./gsearch '' &>/dev/null;  fetch {} | glow")
+    if [ -z "$selection" ]; then
+        echo "Cancelled"
+    else
+        user_name=$(echo "$selection" | awk '{print $1}')
+        repo_name=$(echo "$selection" | awk '{print $2}')
+        xdg-open "https://github.com/$repo_name/$user_name"
+    fi
+
+fi

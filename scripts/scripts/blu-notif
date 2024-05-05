@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Function to send a notification
+send_notification() {
+    message="$1"
+    notify-send -t 2000 "$message"
+}
+
+# Loop indefinitely
+while true; do
+    # Check if any device is connected
+    connected_device=$(bluetoothctl devices Connected | awk '{$1=$2=""; print $0}')
+
+    if [[ -z $connected_device ]]; then
+        # No device is connected
+        if [[ $previous_state == "connected" ]]; then
+            send_notification "Disconnected"
+            previous_state="disconnected"
+        fi
+    else
+        # A device is connected
+        device_id=$(bluetoothctl devices Connected | awk '{print $2}' | tr ':' '_')
+        battery=$(dbus-send --print-reply=literal --system --dest=org.bluez /org/bluez/hci0/dev_$device_id org.freedesktop.DBus.Properties.Get string:"org.bluez.Battery1" string:"Percentage" | awk '{print $3}')
+        if [[ $previous_state == "disconnected" ]]; then
+            send_notification "$connected_device Connected"
+            previous_state="connected"
+        fi
+    fi
+
+    # Wait for 1 second before checking again
+    # sleep 1
+done

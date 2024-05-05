@@ -1,0 +1,132 @@
+@import "mocha.css";
+
+/* margin: top right bottom left */
+/* Spacing outside the element */
+
+/* padding: top right bottom left */
+/* Spacing inside the element */
+
+* {
+  font-family: JetBransMono Nerd Font;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+window#waybar {
+  background-color: @crust;
+  /* background-color: @crust; */
+  color: @text;
+}
+
+#workspaces {
+    background: @crust;
+    /* background: @surface0; */
+    margin: 1px 1px 0px 1px;
+    padding: 0px 0px;
+    border-radius: 15px;
+    color: @text;
+}
+
+#workspaces button {
+    padding: 0px 5px;
+    margin: 1px 4px;
+    border-radius: 15px;
+    color: @text;
+    background-color: @surface0;
+    /* background-color: @surface1; */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#workspaces button.active {
+    color: @crust;
+    /* background: linear-gradient(45deg, @mauve, @sapphire); */
+    background: @lavender;
+    min-width: 40px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#workspaces button:hover {
+    color: @crust;
+    /* background: linear-gradient(45deg, @mauve, @sapphire); */
+    background: @lavender;
+}
+
+#clock.1,
+#clock.3,
+#battery,
+#pulseaudio,
+#memory{
+  padding: 0px 12px;
+  margin: 2px 0px 0px 0px;
+  border-radius: 10px;
+  color: @crust;
+  opacity: 0.9;
+  background: @blue;  
+}
+
+#custom-scratchOutput,
+#tray,
+#cpu,
+#pulseaudio.microphone,
+#clock.2,
+#bluetooth,
+#submap{
+  padding: 0px 12px;
+  margin: 2px 0px 0px 0px;
+  border-radius: 10px;
+  color: @blue;
+  background: @surface0;
+  opacity: 1;  
+}
+
+#submap{
+    color: @blue;
+}
+
+/* #cpu { */
+/*   background-color: @lavender; */
+/* } */
+
+/* #pulseaudio { */
+/*   background: @sapphire; */
+/* } */
+
+#pulseaudio.microphone {
+    background: @surface0;
+}
+
+/* #memory { */
+/*   background: @sapphire; */
+/* } */
+/**/
+
+@keyframes blinker {
+  50% {
+    /* opacity: 0.1; */
+    color: @crust;
+    background: @red;
+  }
+}
+#custom-scratchOutput.urgent {
+    animation: blinker 1s ease-in-out infinite;
+}
+
+#battery.discharging{
+    background: @blue;
+}
+#battery.warning {
+    background: @maroon;
+}
+#battery.critical {
+    background: @red;
+}
+#battery.plugged {
+    background: @teal;
+}
+#battery.charging {
+    background: @green;
+}
+
+#clock.3, #clock.1 {
+  background: @blue;
+}
