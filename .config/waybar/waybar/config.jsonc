@@ -6,7 +6,7 @@
     "spacing": 8,
 	"modules-left": ["clock#1", "clock#2", "clock#3","hyprland/submap", "custom/scratchOutput" ],
 	"modules-center": [  "hyprland/workspaces" ],
-	"modules-right": [ "pulseaudio", "bluetooth", "battery", "tray" ],
+	"modules-right": [ "custom/audio", "bluetooth", "battery", "tray" ],
 
      "hyprland/workspaces":{
         "on-scroll-up": "hyprctl dispatch workspace e+1",
@@ -24,45 +24,42 @@
     "exec": "~/scripts/getScratchOutput.sh" 
 },   
 
-	"pulseaudio": {
-		"format": "{icon} {volume:2}%",
-		"format-bluetooth": "{icon}  {volume}%",
-		"format-muted": " ",
-		"format-icons": {
-			"headphones": " ",
-			"default": [
-				" ",
-				" "
-			]
-		},
-		"scroll-step": 5,
+	"custom/audio": {
+        "interval" : 1,
+        "return-type" : "json",
+        "format" : "{}",
+        // "exec": "sym='󰕾'; [[ $(pamixer --get-volume-human) == muted ]] && sym='󰖁'; printf \"$sym $(pamixer --get-volume)\n\"",
+    "exec": "printf '{\"text\":\"%s %s\",\"class\":\"%s\"}\n' \"$([[ $(pamixer --get-volume-human) == \"muted\" ]] && echo \"󰖁\" || echo \"󰕾\")\" \"$(pamixer --get-volume)\" \"$([[ $(pamixer --get-volume-human) == \"muted\" ]] && echo \"muted\" || echo \"unmuted\")\"",
+        "signal" : 10,
+        "tooltip": false,
 		"on-click": "pavucontrol",
-		"on-click-right": "pamixer -t",
+		"on-click-right": "pamixer -t && pkill -RTMIN+10 waybar",
         "on-scroll-up": "pamixer -i  2 --allow-boost",
         "on-scroll-down": "pamixer -d  2 --allow-boost"
     },
 
-    "pulseaudio#microphone": {
-        "format": "{format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": " ",
-        "on-click": "pamixer --default-source -t",
-        "on-click-right": "pavucontrol",
-        "on-scroll-up": "pamixer --default-source -i 5",
-        "on-scroll-down": "pamixer --default-source -d 5",
-        "scroll-step": 5
-    },
+    // "pulseaudio#microphone": {
+    //     "format": "{format_source}",
+    //     "format-source": " {volume}%",
+    //     "format-source-muted": " ",
+    //     "on-click": "pamixer --default-source -t",
+    //     "on-click-right": "pavucontrol",
+    //     "on-scroll-up": "pamixer --default-source -i 5",
+    //     "on-scroll-down": "pamixer --default-source -d 5",
+    //     "scroll-step": 5
+    // },
 
 	"memory": {
 		"interval": 5,
 		"format": "  {}%"
 	},
     "bluetooth": {
+    "interval" : 1,
 	"format-on": "󰂯",
 	"format-off": "󰂲",
     "format-disabled" : "󰂲",  
-	"format-connected": "󰂱 ",
-	"format-connected-battery": "󰂱 {device_battery_percentage}%",
+	"format-connected": "󰂱",
+	"format-connected-battery": "󰂯 {device_battery_percentage}%",
 	// "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
 	// "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
 	"tooltip-format-connected": "{num_connections} connected\n{device_enumerate}",
@@ -80,7 +77,9 @@
 			"warning": 30,
 			"critical": 15
 		},
-		"format": "{icon} {capacity}% {time}",
+		"format-discharging": "{icon} {capacity}% {time}",
+		"format-charging": "{icon} {capacity}% {time}",
+		"format-plugged": "{icon} {capacity}%",
         "format-time":"{H}h{M:2}m",
 		"format-icons": [
             "󰂎",
