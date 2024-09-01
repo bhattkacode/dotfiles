@@ -7,13 +7,13 @@
 /* Spacing inside the element */
 
 * {
-  font-family: JetBransMono Nerd Font;
+  font-family: JetBrainsMonoNerd Font;
   font-size: 14px;
   font-weight: bold;
 }
 
 window#waybar {
-  background-color: @crust;
+  background-color: @mantle;
   /* background-color: @crust; */
   color: @text;
 }
@@ -51,49 +51,49 @@ window#waybar {
     background: @lavender;
 }
 
+#bluetooth,
 #clock.1,
 #clock.3,
 #battery,
-#pulseaudio,
+#custom-audio,
 #memory{
   padding: 0px 12px;
   margin: 2px 0px 0px 0px;
   border-radius: 10px;
   color: @crust;
-  opacity: 0.9;
   background: @blue;  
 }
 
 #custom-scratchOutput,
 #tray,
-#cpu,
-#pulseaudio.microphone,
+/* #cpu, */
+/* #pulseaudio.microphone, */
 #clock.2,
-#bluetooth,
+#custom-cal,
 #submap{
   padding: 0px 12px;
   margin: 2px 0px 0px 0px;
   border-radius: 10px;
   color: @blue;
   background: @surface0;
-  opacity: 1;  
 }
 
-#submap{
-    color: @blue;
+#clock.3, #clock.1 {
+  background: @blue;
 }
 
 /* #cpu { */
 /*   background-color: @lavender; */
 /* } */
 
-/* #pulseaudio { */
-/*   background: @sapphire; */
-/* } */
-
-#pulseaudio.microphone {
-    background: @surface0;
+#custom-audio.muted {
+  background: @surface0;
+  color: @blue;
 }
+
+/* #pulseaudio.microphone { */
+/*     background: @surface0; */
+/* } */
 
 /* #memory { */
 /*   background: @sapphire; */
@@ -127,6 +127,8 @@ window#waybar {
     background: @green;
 }
 
-#clock.3, #clock.1 {
-  background: @blue;
+#bluetooth.off,
+#bluetooth.disabled {
+    background: @surface0;
+    color: @blue;
 }

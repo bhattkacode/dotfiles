@@ -80,7 +80,7 @@ vim.opt.breakindent = true
 -- vim.opt.signcolumn = 'yes'
 
 -- Transparent 󰈸󰈸
-function Transparent()
+function transparent()
     vim.cmd [[colorscheme catppuccin
     hi Normal guibg=none ctermbg=none
     hi NormalFloat guibg=none ctermbg=none
@@ -116,12 +116,14 @@ function Transparent()
 ]]
 end
 
-Transparent()
+transparent()
 
 --Remove Transparency
-function Opaque()
+function opaque()
     vim.cmd [[colorscheme catppuccin
-    hi LocalHighlight guibg=#2a2b3c guifg=none]]
+    hi LocalHighlight guibg=#2a2b3c guifg=none
+    " hi Normal guibg=#1e1e2e
+    ]]
     --Telescope Colours
     local colors = require("catppuccin.palettes").get_palette()
     local TelescopeColor = {
@@ -146,6 +148,13 @@ function Opaque()
 end
 
 vim.cmd [[let g:buftabline_show = 1]]
+
+vim.opt.guicursor = {
+    "n-v-c:block-Cursor",
+    "i-ci-ve:ver25-Cursor",
+    "r-cr:hor20-Cursor",
+    "o:hor50-Cursor",
+}
 
 vim.opt.conceallevel = 1
 vim.opt.magic = false

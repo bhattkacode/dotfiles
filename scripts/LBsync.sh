@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-destination_dir="/media/data/LinuxBackup/dotfiles/"
+destination_dir="/media/windows/dotfiles/"
 
 # echo -n "Deleting $destination_dir (enter/ctrl+c)"
 # read
@@ -28,7 +28,6 @@ file_list=(
 	"$HOME/.config/tmux/tmux.conf"
 	"$HOME/.config/btop/btop.conf"
 	"$HOME/wallpapers/"
-	"$HOME/README.md"
 )
 
 for item in "${file_list[@]}"; do

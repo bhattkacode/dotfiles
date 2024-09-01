@@ -10,11 +10,13 @@ send_notification() {
 	local state=$2
 
 	if [[ $state == "Charging" || $state == "Not charging" || $state == "Full" ]]; then
-		dunstctl close $(dunstctl history | jq -r '.data[] | select(.[].message.data == "<b>Battery is Discharging</b>") | .[].id.data' | tail -1)
-		notification_sent=0
+		if [[ $notification_sent == 1 ]]; then
+			dunstify -C 69
+			notification_sent=0
+		fi
 	elif [[ $state == "Discharging" ]]; then
 		if [[ $notification_sent == 0 ]]; then
-			notify-send -u critical -t 10000 "Battery is Discharging"
+			dunstify -r 69 -u critical -t 10000 "Battery is Discharging"
 			notification_sent=1
 		fi
 		if [[ $percent -lt 10 ]]; then

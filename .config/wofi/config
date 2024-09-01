@@ -4,3 +4,5 @@ term=alacritty
 insensitive=true
 no_actions=true
 prompt=Search
+height=350
+width=600

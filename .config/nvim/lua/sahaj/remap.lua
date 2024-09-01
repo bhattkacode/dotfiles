@@ -9,13 +9,20 @@ local keymap = vim.keymap
 --
 keymap.set('n', '<leader>w', ':silent! noautocmd w<CR>', { noremap = true, silent = true })
 
-keymap.set("n", "<leader>2",
-    ":%y<CR>:!xdotool key alt+space; sleep 0.1; xdotool mousemove 1324 238 click 1; sleep 0.1; xdotool key ctrl+a; sleep 0.1; xdotool key ctrl+v; sleep 0.1; xdotool key ctrl+apostrophe<CR>")
-keymap.set("n", "<leader>1",
-    ":%y<CR>:!xdotool key alt+space; sleep 0.1; xdotool mousemove 1324 238 click 1; sleep 0.1; xdotool key ctrl+a; sleep 0.1; xdotool key ctrl+v; sleep 0.1<CR>")
+-- keymap.set("n", "<leader>1",
+--     ":%y<CR>:!xdotool key alt+space; sleep 0.1; xdotool mousemove 1324 238 click 1; sleep 0.1; xdotool key ctrl+a; sleep 0.1; xdotool key ctrl+v; sleep 0.1<CR>")
+-- keymap.set("n", "<leader>2",
+--     ":%y<CR>:!xdotool key alt+space; sleep 0.1; xdotool mousemove 1324 238 click 1; sleep 0.1; xdotool key ctrl+a; sleep 0.1; xdotool key ctrl+v; sleep 0.1; xdotool key ctrl+apostrophe<CR>")
+-- keymap.set("n", "<leader>3",
+--     ":!xdotool mousemove 1324 238 click 1; sleep 0.1; xdotool key ctrl+a; sleep 0.1; xdotool key ctrl+c; sleep 0.1; xdotool key alt+space; sleep 0.1; xdotool key enter; sleep 0.1; xdotool key p<CR>")
 
+keymap.set("n", "<leader>1",
+    ":%y<CR>:!echo 'key alt+space'|dotoolc; sleep 0.1; echo 'mouseto 0.9 0.28'| dotoolc; sleep 0.01; echo 'click left'|dotoolc ; sleep 0.01; echo 'key ctrl+a' | dotoolc; sleep 0.01; echo 'key ctrl+v' | dotoolc<CR>")
+keymap.set("n", "<leader>2",
+    ":%y<CR>:!echo 'key alt+space'|dotoolc; sleep 0.1; echo 'mouseto 0.9 0.28'|dotoolc; sleep 0.01; echo 'click left'|dotoolc; sleep 0.01; echo 'key ctrl+a'|dotoolc; sleep 0.01; echo 'key ctrl+v'|dotoolc; sleep 0.01; echo 'key ctrl+apostrophe' | dotoolc<CR>")
 keymap.set("n", "<leader>3",
-    ":!xdotool mousemove 1324 238 click 1; sleep 0.1; xdotool key ctrl+a; sleep 0.1; xdotool key ctrl+c; sleep 0.1; xdotool key alt+space; sleep 0.1; xdotool key enter; sleep 0.1; xdotool key p<CR>")
+    ":!echo 'key alt+space'|dotoolc; sleep 0.1; echo 'mouseto 0.95 0.28'|dotoolc; sleep 0.01; echo 'click left'|dotoolc; sleep 0.01; echo 'key ctrl+a'|dotoolc; sleep 0.01; echo 'key ctrl+c'|dotoolc; sleep 0.01; echo 'key alt+space'|dotoolc; sleep 0.1;  echo 'key enter'|dotoolc; sleep 0.01; echo 'key p' | dotoolc<CR>")
+
 keymap.set("n", "H", ":bprev<CR>", { silent = true })
 keymap.set("n", "L", ":bnext<CR>", { silent = true })
 
@@ -131,7 +138,7 @@ keymap.set({ "n", "v" }, "<C-n>", "nvgn")
 keymap.set("n", "<leader>cd", ":cd %:h<CR>", { desc = "Change cwd to buffer dir" })
 
 --plugins-keymaps
-
+keymap.set("n", "<leader>cc", ":CccPick<CR>")
 --undotree
 keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
 
@@ -183,14 +190,14 @@ keymap.set('n', '<leader>fc', function()
 
 --runners
 -- keymap.set("n", "<leader>9", ":!python3 %<CR>")
--- keymap.set("n", "<leader>8", ":!(st -e sh -c 'python3 %;read e')<CR>", { silent = true })
+-- keymap.set("n", "<leader>8", ":!(foot -e sh -c 'python3 %;read e')<CR>", { silent = true })
 vim.cmd [[
-autocmd filetype python nnoremap <leader>9 :w<CR>:!python3 %<CR>
-autocmd filetype python nnoremap <leader>8 :w<CR>:!(st -e sh -c 'python3 %;read e'&)<CR>
-autocmd filetype c nnoremap <leader>9 :w <CR> :!gcc % -o %:r && ./%:r<CR>
-autocmd filetype c nnoremap <leader>8 :w <CR> :!(st -e sh -c 'gcc % -o %:r && ./%:r;read e'&)<CR>
-autocmd filetype cpp nnoremap <leader>9 :w <CR> :!g++ % -o %:r && ./%:r<CR>
-autocmd filetype cpp nnoremap <leader>8 :w <CR> :!(st -e sh -c 'g++ % -o %:r && ./%:r;read e'&)<CR>
+autocmd filetype python nnoremap <leader>9 :!python3 %<CR>
+autocmd filetype python nnoremap <leader>8 :!(footclient -a float -w1200x700 -e sh -c 'python3 %;read e'&)<CR>
+autocmd filetype c nnoremap <leader>9  :!gcc % -o %:r && ./%:r<CR>
+autocmd filetype c nnoremap <leader>8  :!(footclient -a float -w1200x700-e sh -c 'gcc % -o %:r && ./%:r;read e'&)<CR>
+autocmd filetype cpp nnoremap <leader>9  :!g++ % -o %:r && ./%:r<CR>
+autocmd filetype cpp nnoremap <leader>8  :!(footclient -a float -w1200x700-e sh -c 'g++ % -o %:r && ./%:r;read e'&)<CR>
 ]]
 -- Function to go to a pattern in a specified direction
 function GotoPattern(pattern, dir)

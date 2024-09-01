@@ -1,4 +1,3 @@
-# Created by Zap installer
 [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
 
 plug "zsh-users/zsh-autosuggestions"
@@ -16,6 +15,7 @@ PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/ve
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
+setopt appendhistory
 
 # Basic auto/tab complete:
 autoload -Uz compinit
@@ -41,7 +41,8 @@ alias scratch='hyprctl dispatch exec "[workspace special:term silent] alacritty 
 alias ssp='ssh 192.168.0.195 -p 8022'
 alias ssmp='ssh 192.168.0.199 -p 8022'
 alias ssn='ssh 0.tcp.in.ngrok.io -p '
-alias nl='nvim ~/leet.cpp +"lua vim.diagnostic.disable(0)" +"lua require(\"cmp\").setup.buffer{enabled=false}" +":,%d _"'
+# alias nvl='nvim ~/leet.cpp +"lua vim.diagnostic.disable(0)" +"lua require(\"cmp\").setup.buffer{enabled=false}"'
+alias nvl='nvim ~/leet.cpp +"lua vim.diagnostic.disable(0)" +"lua require(\"cmp\").setup.buffer{enabled=false}" +":,%d _"'
 alias dsa='nvim ~/notes/tech/dsaRoadmap.md'
 alias dsaq='nvim ~/notes/tech/dsaq.md +"set nowrap"'
 alias lnsync='LBsync.sh && notesync'
@@ -197,3 +198,18 @@ source /usr/share/fzf/key-bindings.zsh
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 
+function osc7-pwd() {
+    emulate -L zsh # also sets localoptions for us
+    setopt extendedglob
+    local LC_ALL=C
+    printf '\e]7;file://%s%s\e\' $HOST ${PWD//(#m)([^@-Za-z&-;_~])/%${(l:2::0:)$(([##16]#MATCH))}}
+}
+
+function chpwd-osc7-pwd() {
+    (( ZSH_SUBSHELL )) || osc7-pwd
+}
+add-zsh-hook -Uz chpwd chpwd-osc7-pwd
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh --disable-up-arrow)"

@@ -146,6 +146,7 @@ return {
                 'bashls',
                 'clangd',
                 'pylsp',
+                'tsserver'
             })
 
             require('mason-lspconfig').setup { ensure_installed = ensure_installed }
@@ -211,6 +212,9 @@ return {
             end,
             formatters_by_ft = {
                 sh = { 'shfmt' },
+                -- javascript = { 'prettier' },
+                html = { 'prettierd' },
+                -- css = { 'prettierd' },
             }
             -- Conform can also run multiple formatters sequentially
             -- python = { "isort", "black" },

@@ -201,7 +201,7 @@ return {
         keys = {
             { "<leader>mir", "<cmd>CellularAutomaton make_it_rain<CR>" } }
     },
-    { 'kylechui/nvim-surround', event = "VeryLazy", opts = { keymaps = { visual = "Y", visual_line = "gY", }, }, },
+    { 'kylechui/nvim-surround', event = "VeryLazy",                             opts = { keymaps = { visual = "Y", visual_line = "gY", }, }, },
     -- {
     --     "NvChad/nvim-colorizer.lua",
     --     config = function()
@@ -210,6 +210,7 @@ return {
     --     end,
     --     event = "VeryLazy",
     -- },
+    { "uga-rosa/ccc.nvim",      opts = { highlighter = { auto_enable = true } } },
     -- {
     --     "max397574/colortils.nvim",
     --     cmd = "Colortils",

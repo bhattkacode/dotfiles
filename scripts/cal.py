@@ -40,15 +40,17 @@ def get_current_event(calendar_id):
 
 
 def display_current_events():
-    padding = 10
     blue = "#74c7ec"
-    calendars = ['primary', '34624bc46c7437a816658294c1682e1c5de1717e4a2693e15f2af4203a4b7b0c@group.calendar.google.com', '0fb1c9c7105249bf1a66a20120c9184cd7a1d51d79fd3411c6c0917fa5eb3864@group.calendar.google.com', 'family14964246631284460147@group.calendar.google.com']
+    calendars = ['primary', '34624bc46c7437a816658294c1682e1c5de1717e4a2693e15f2af4203a4b7b0c@group.calendar.google.com',
+                 '0fb1c9c7105249bf1a66a20120c9184cd7a1d51d79fd3411c6c0917fa5eb3864@group.calendar.google.com', 'family14964246631284460147@group.calendar.google.com']
 
     for calendar_id in calendars:
         current_event = get_current_event(calendar_id)
         if current_event:
-            start_time = current_event[0]['start'].get('dateTime', current_event[0]['start'].get('date'))
-            end_time = current_event[0]['end'].get('dateTime', current_event[0]['end'].get('date'))
+            start_time = current_event[0]['start'].get(
+                'dateTime', current_event[0]['start'].get('date'))
+            end_time = current_event[0]['end'].get(
+                'dateTime', current_event[0]['end'].get('date'))
 
             # Extract timezone offset and create datetime objects
             start_time = datetime.fromisoformat(start_time[:-6])
@@ -56,11 +58,14 @@ def display_current_events():
 
             # Convert to local timezone
             local_timezone = start_time.astimezone().tzinfo
-            start_time = start_time.astimezone(local_timezone).strftime('%I:%M')
+            start_time = start_time.astimezone(
+                local_timezone).strftime('%I:%M')
             end_time = end_time.astimezone(local_timezone).strftime('%I:%M')
 
             summary = current_event[0]['summary']
-            print(f"<big><span color='{blue}'>󰃰 </span><span font='Aquire'>{summary}</span> [<span color='{blue}'>{start_time}</span>-<span color='{blue}'>{end_time}</span>]</big>" + " " * padding)
+            print(f"󰃰 {summary} [{start_time}-{end_time}]")
             return  # remove if more than one event
-    print(f"<big><span color='{blue}'>󰃰 </span>Nothing to do rn</big>" + " "* padding)
+    print("󰃰 Nothing to do rn")
+
+
 display_current_events()
