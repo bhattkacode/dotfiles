@@ -3,6 +3,7 @@
 {
 	"layer": "top",
 	"position": "bottom",
+    "height": 0,
     "spacing": 8,
 	"modules-left": ["clock#1", "clock#2", "clock#3", "custom/scratchOutput", "hyprland/submap" ],
 	"modules-center": [  "hyprland/workspaces" ],
@@ -41,7 +42,7 @@
 		"on-click": "pavucontrol",
 		"on-click-right": "pamixer -t && pkill -RTMIN+10 waybar",
         "on-scroll-up": "pamixer -i  1 --allow-boost",
-        "on-scroll-down": "pamixer -d  1 --allow-boost",
+        "on-scroll-down": "pamixer -d  1 --allow-boost"
     },
 
     // "pulseaudio#microphone": {
@@ -87,7 +88,7 @@
 		"format-discharging": "{icon} {capacity}% {time}",
 		"format-charging": "{icon} {capacity}% {time}",
 		"format-plugged": "{icon} {capacity}%",
-        "format-full" : "󰁹 {time}",
+        "format-full" : "󰁹",
         "format-time":"{H}h{M:2}m",
 		"format-icons": [
             "󰂎",
@@ -95,7 +96,8 @@
             "󰁼",
             "󰁽",
             "󰁿",
-            "󰂁"
+            "󰂁",
+            "󰁹"
 		],
         "tooltip-format-discharging" : "Using {power:4.1f}W",
         "tooltip-format-plugged" : "Using {power:4.1f}W",

@@ -1,5 +1,4 @@
 return {
-
     -- { 'j-hui/fidget.nvim',                         config = function() require('fidget').setup({ window = { winblend = 0 } }) end },
     "mg979/vim-visual-multi",
     {
@@ -93,19 +92,19 @@ return {
         },
 
     },
-    {
-        "Exafunction/codeium.vim",
-        event = "BufEnter",
-        config = function()
-            vim.keymap.set('i', '<Tab>', function() return vim.fn['codeium#Accept']() end,
-                { expr = true, silent = true })
-            -- vim.keymap.set('i', '<F34>', function() return vim.fn['codeium#CycleCompletions'](1) end,
-            --     { expr = true, silent = true })
-            -- vim.keymap.set('i', '<F33>', function() return vim.fn['codeium#CycleCompletions'](-1) end,
-            --     { expr = true, silent = true })
-            vim.keymap.set('i', '<C-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
-        end
-    },
+    -- {
+    --     "Exafunction/codeium.vim",
+    --     event = "BufEnter",
+    --     config = function()
+    --         vim.keymap.set('i', '<Tab>', function() return vim.fn['codeium#Accept']() end,
+    --             { expr = true, silent = true })
+    --         -- vim.keymap.set('i', '<F34>', function() return vim.fn['codeium#CycleCompletions'](1) end,
+    --         --     { expr = true, silent = true })
+    --         -- vim.keymap.set('i', '<F33>', function() return vim.fn['codeium#CycleCompletions'](-1) end,
+    --         --     { expr = true, silent = true })
+    --         vim.keymap.set('i', '<C-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+    --     end
+    -- },
     {
         "nvim-neo-tree/neo-tree.nvim",
         cmd = "NeoTree",

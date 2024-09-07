@@ -1,11 +1,5 @@
 @import "mocha.css";
 
-/* margin: top right bottom left */
-/* Spacing outside the element */
-
-/* padding: top right bottom left */
-/* Spacing inside the element */
-
 * {
   font-family: JetBrainsMonoNerd Font;
   font-size: 14px;
@@ -19,7 +13,7 @@ window#waybar {
 }
 
 #workspaces {
-    background: @crust;
+    /* background: @crust; */
     /* background: @surface0; */
     margin: 1px 1px 0px 1px;
     padding: 0px 0px;
@@ -124,6 +118,9 @@ window#waybar {
     background: @teal;
 }
 #battery.charging {
+    background: @green;
+}
+#battery.full {
     background: @green;
 }
 

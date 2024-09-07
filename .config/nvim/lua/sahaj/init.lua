@@ -21,7 +21,7 @@ require("lazy").setup({
     checker = { enabled = true, notify = false, },
     change_detection = { notify = false, },
 })
-codeiumString = " {.}%3{codeium#GetStatusString()}"
+-- codeiumString = " {.}%3{codeium#GetStatusString()}"
 
 -- plugs = require("sahaj.plugins")
 -- function DevMode()
@@ -116,7 +116,7 @@ function transparent()
 ]]
 end
 
-transparent()
+-- transparent()
 
 --Remove Transparency
 function opaque()
@@ -248,4 +248,4 @@ vim.o.statusline = " "
     .. " %l,%c"
     .. " %#StatusPercent#"
     .. " %p%%  "
-    .. codeiumString
+-- .. codeiumString

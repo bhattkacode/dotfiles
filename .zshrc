@@ -212,4 +212,8 @@ add-zsh-hook -Uz chpwd chpwd-osc7-pwd
 
 . "$HOME/.atuin/bin/env"
 
+export TERM='xterm-256color'
+export EDITOR='nvim'
+export VISUAL='nvim'
+
 eval "$(atuin init zsh --disable-up-arrow)"
