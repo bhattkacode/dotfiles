@@ -5,23 +5,23 @@ vim.g.maplocalleader = " "
 -- Lazy initialization
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    { import = "sahaj.plugins" }, }, {
-    checker = { enabled = true, notify = false, },
-    change_detection = { notify = false, },
+  { import = "sahaj.plugins" }, }, {
+  checker = { enabled = true, notify = false, },
+  change_detection = { notify = false, },
 })
--- codeiumString = " {.}%3{codeium#GetStatusString()}"
+codeiumString = " {.}%3{codeium#GetStatusString()}"
 
 -- plugs = require("sahaj.plugins")
 -- function DevMode()
@@ -81,7 +81,7 @@ vim.opt.breakindent = true
 
 -- Transparent 󰈸󰈸
 function transparent()
-    vim.cmd [[colorscheme catppuccin
+  vim.cmd [[colorscheme catppuccin
     hi Normal guibg=none ctermbg=none
     hi NormalFloat guibg=none ctermbg=none
     hi LineNr guibg=none ctermbg=none
@@ -116,44 +116,44 @@ function transparent()
 ]]
 end
 
--- transparent()
+transparent()
 
 --Remove Transparency
 function opaque()
-    vim.cmd [[colorscheme catppuccin
+  vim.cmd [[colorscheme catppuccin
     hi LocalHighlight guibg=#2a2b3c guifg=none
     " hi Normal guibg=#1e1e2e
     ]]
-    --Telescope Colours
-    local colors = require("catppuccin.palettes").get_palette()
-    local TelescopeColor = {
-        TelescopeMatching = { fg = colors.flamingo },
-        TelescopeSelection = { fg = colors.text, bg = colors.surface0, bold = true },
+  --Telescope Colours
+  local colors = require("catppuccin.palettes").get_palette()
+  local TelescopeColor = {
+    TelescopeMatching = { fg = colors.flamingo },
+    TelescopeSelection = { fg = colors.text, bg = colors.surface0, bold = true },
 
-        TelescopePromptPrefix = { bg = colors.surface0 },
-        TelescopePromptNormal = { bg = colors.surface0 },
-        TelescopeResultsNormal = { bg = colors.mantle },
-        TelescopePreviewNormal = { bg = colors.mantle },
-        TelescopePromptBorder = { bg = colors.surface0, fg = colors.surface0 },
-        TelescopeResultsBorder = { bg = colors.mantle, fg = colors.mantle },
-        TelescopePreviewBorder = { bg = colors.mantle, fg = colors.mantle },
-        TelescopePromptTitle = { bg = colors.pink, fg = colors.mantle },
-        TelescopeResultsTitle = { fg = colors.mantle },
-        TelescopePreviewTitle = { bg = colors.green, fg = colors.mantle },
-    }
+    TelescopePromptPrefix = { bg = colors.surface0 },
+    TelescopePromptNormal = { bg = colors.surface0 },
+    TelescopeResultsNormal = { bg = colors.mantle },
+    TelescopePreviewNormal = { bg = colors.mantle },
+    TelescopePromptBorder = { bg = colors.surface0, fg = colors.surface0 },
+    TelescopeResultsBorder = { bg = colors.mantle, fg = colors.mantle },
+    TelescopePreviewBorder = { bg = colors.mantle, fg = colors.mantle },
+    TelescopePromptTitle = { bg = colors.pink, fg = colors.mantle },
+    TelescopeResultsTitle = { fg = colors.mantle },
+    TelescopePreviewTitle = { bg = colors.green, fg = colors.mantle },
+  }
 
-    for hl, col in pairs(TelescopeColor) do
-        vim.api.nvim_set_hl(0, hl, col)
-    end
+  for hl, col in pairs(TelescopeColor) do
+    vim.api.nvim_set_hl(0, hl, col)
+  end
 end
 
 vim.cmd [[let g:buftabline_show = 1]]
 
 vim.opt.guicursor = {
-    "n-v-c:block-Cursor",
-    "i-ci-ve:ver25-Cursor",
-    "r-cr:hor20-Cursor",
-    "o:hor50-Cursor",
+  "n-v-c:block-Cursor",
+  "i-ci-ve:ver25-Cursor",
+  "r-cr:hor20-Cursor",
+  "o:hor50-Cursor",
 }
 
 vim.opt.conceallevel = 1
@@ -161,12 +161,14 @@ vim.opt.magic = false
 
 vim.opt.inccommand = 'split'
 
+vim.opt.mouse = ''
+
 vim.opt.nu = true
 vim.opt.rnu = true
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
 vim.opt.splitright = true
@@ -192,7 +194,7 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 500
 
-vim.opt.autoindent = true
+-- vim.opt.autoindent = true
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -208,13 +210,13 @@ vim.opt.foldenable = true
 
 local cmp_enabled = true
 vim.api.nvim_create_user_command("ToggleAutoComplete", function()
-    if cmp_enabled then
-        require("cmp").setup.buffer({ enabled = false })
-        cmp_enabled = false
-    else
-        require("cmp").setup.buffer({ enabled = true })
-        cmp_enabled = true
-    end
+  if cmp_enabled then
+    require("cmp").setup.buffer({ enabled = false })
+    cmp_enabled = false
+  else
+    require("cmp").setup.buffer({ enabled = true })
+    cmp_enabled = true
+  end
 end, {})
 
 -- local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -248,4 +250,4 @@ vim.o.statusline = " "
     .. " %l,%c"
     .. " %#StatusPercent#"
     .. " %p%%  "
--- .. codeiumString
+    .. codeiumString

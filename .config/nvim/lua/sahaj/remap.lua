@@ -17,18 +17,18 @@ keymap.set('n', '<leader>w', ':silent! noautocmd w<CR>', { noremap = true, silen
 --     ":!xdotool mousemove 1324 238 click 1; sleep 0.1; xdotool key ctrl+a; sleep 0.1; xdotool key ctrl+c; sleep 0.1; xdotool key alt+space; sleep 0.1; xdotool key enter; sleep 0.1; xdotool key p<CR>")
 
 keymap.set("n", "<leader>1",
-    ":%y<CR>:!echo 'key alt+space'|dotoolc; sleep 0.1; echo 'mouseto 0.9 0.28'| dotoolc; sleep 0.01; echo 'click left'|dotoolc ; sleep 0.01; echo 'key ctrl+a' | dotoolc; sleep 0.01; echo 'key ctrl+v' | dotoolc<CR>")
+  ":%y<CR>:!echo 'key alt+space'|dotoolc; sleep 0.1;echo 'mouseto 0.9 0.5'| dotoolc ;echo 'mouseto 0.9 0.28'| dotoolc; sleep 0.01; echo 'click left'|dotoolc ; sleep 0.01; echo 'key ctrl+a' | dotoolc; sleep 0.01; echo 'key ctrl+v' | dotoolc<CR>")
 keymap.set("n", "<leader>2",
-    ":%y<CR>:!echo 'key alt+space'|dotoolc; sleep 0.1; echo 'mouseto 0.9 0.28'|dotoolc; sleep 0.01; echo 'click left'|dotoolc; sleep 0.01; echo 'key ctrl+a'|dotoolc; sleep 0.01; echo 'key ctrl+v'|dotoolc; sleep 0.01; echo 'key ctrl+apostrophe' | dotoolc<CR>")
+  ":%y<CR>:!echo 'key alt+space'|dotoolc; sleep 0.1;echo 'mouseto 0.9 0.5'| dotoolc ; echo 'mouseto 0.9 0.28'|dotoolc; sleep 0.01; echo 'click left'|dotoolc; sleep 0.01; echo 'key ctrl+a'|dotoolc; sleep 0.01; echo 'key ctrl+v'|dotoolc; sleep 0.01; echo 'key ctrl+apostrophe' | dotoolc<CR>")
 keymap.set("n", "<leader>3",
-    ":!echo 'key alt+space'|dotoolc; sleep 0.1; echo 'mouseto 0.95 0.28'|dotoolc; sleep 0.01; echo 'click left'|dotoolc; sleep 0.01; echo 'key ctrl+a'|dotoolc; sleep 0.01; echo 'key ctrl+c'|dotoolc; sleep 0.01; echo 'key alt+space'|dotoolc; sleep 0.1;  echo 'key enter'|dotoolc; sleep 0.01; echo 'key p' | dotoolc<CR>")
+  ":!echo 'key alt+space'|dotoolc; sleep 0.1;echo 'mouseto 0.9 0.5'| dotoolc ; echo 'mouseto 0.95 0.28'|dotoolc; sleep 0.01; echo 'click left'|dotoolc; sleep 0.01; echo 'key ctrl+a'|dotoolc; sleep 0.01; echo 'key ctrl+c'|dotoolc; sleep 0.01; echo 'key alt+space'|dotoolc; sleep 0.1;  echo 'key enter'|dotoolc; sleep 0.01; echo 'key P' | dotoolc<CR>")
 
 keymap.set("n", "H", ":bprev<CR>", { silent = true })
 keymap.set("n", "L", ":bnext<CR>", { silent = true })
 
-keymap.set({ "n", "v" }, "<tab>", "%")
+-- keymap.set({ "n", "v" }, "<tab>", "%")
 
-keymap.set("i", "<C-b>", "<esc>pi")
+-- keymap.set("i", "<C-b>", "<esc>pi")
 
 keymap.set("n", "Q", "@qj")
 keymap.set("x", "Q", ":norm @q<CR>")
@@ -124,12 +124,9 @@ keymap.set("n", "x", '"_x')
 keymap.set("n", "<leader>gd", ":lua vim.diagnostic.disable(0)<CR>")
 keymap.set("n", "<leader>ge", ":lua vim.diagnostic.enable(0)<CR>")
 
-keymap.set("i", "<C-s>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
-
+keymap.set("i", "<C-x>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
 
 keymap.set("t", "<esc>", "<C-\\><C-n>")
-
-keymap.set("n", "<leader>z", "ZZ")
 
 keymap.set("i", "<C-d>", "<Del>")
 
@@ -138,6 +135,8 @@ keymap.set({ "n", "v" }, "<C-n>", "nvgn")
 keymap.set("n", "<leader>cd", ":cd %:h<CR>", { desc = "Change cwd to buffer dir" })
 
 --plugins-keymaps
+keymap.set("n", "<leader>z", "<Cmd>ZenMode<CR>")
+
 keymap.set("n", "<leader>cc", ":CccPick<CR>")
 --undotree
 keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
@@ -171,14 +170,14 @@ keymap.set("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "Open Telescope opt
 keymap.set("n", "<leader>fr", "<cmd>Telescope lsp_references<cr>", { desc = "Find lsp references" })
 
 keymap.set('n', '<leader>fps', function()
-        require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") });
-    end,
-    { desc = "Find string, then filter with path" })
+    require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") });
+  end,
+  { desc = "Find string, then filter with path" })
 
 keymap.set('n', '<leader>fc', function()
-        require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir() });
-    end,
-    { desc = "Find files in cwd" })
+    require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir() });
+  end,
+  { desc = "Find files in cwd" })
 
 -- Hop
 -- keymap.set({ "n", "x" }, "<leader><leader>", ":HopWord<CR>")
@@ -201,15 +200,15 @@ autocmd filetype cpp nnoremap <leader>8  :!(footclient -a float -w1200x700-e sh 
 ]]
 -- Function to go to a pattern in a specified direction
 function GotoPattern(pattern, dir)
-    local saved_search_reg = vim.fn.getreg('/')
-    local flags = "We"
-    if dir == "b" then
-        flags = flags .. "b"
-    end
-    for i = 1, vim.v.count1 do
-        vim.fn.search(pattern, flags)
-    end
-    vim.fn.setreg('/', saved_search_reg)
+  local saved_search_reg = vim.fn.getreg('/')
+  local flags = "We"
+  if dir == "b" then
+    flags = flags .. "b"
+  end
+  for i = 1, vim.v.count1 do
+    vim.fn.search(pattern, flags)
+  end
+  vim.fn.setreg('/', saved_search_reg)
 end
 
 -- keymap.set('n', 'w', [[:<C-U>lua GotoPattern('\\<\\w', 'f')<CR>]], { noremap = true, silent = true })
@@ -218,33 +217,33 @@ end
 -- vim.cmd [[vnoremap <silent> w :<C-U>let g:_saved_search_reg=@/<CR>gv/\(^\\|\<\)[A-Za-z0-9_]<CR>:<C-U>let @/=g:_saved_search_reg<CR>gv]]
 
 function ToggleCheckbox()
-    local line = vim.api.nvim_get_current_line()
-    local r, c = unpack(vim.api.nvim_win_get_cursor(0))
-    local uncheckedspace, _ = string.find(line, "- %[ %]")
-    local unchecked, _ = string.find(line, "- %[%]")
-    local checked, _ = string.find(line, "- %[x%]")
+  local line = vim.api.nvim_get_current_line()
+  local r, c = unpack(vim.api.nvim_win_get_cursor(0))
+  local uncheckedspace, _ = string.find(line, "- %[ %]")
+  local unchecked, _ = string.find(line, "- %[%]")
+  local checked, _ = string.find(line, "- %[x%]")
 
-    if uncheckedspace ~= nil then
-        newLine = string.gsub(line, "%[ %]", "[x]")
-    elseif unchecked ~= nil then
-        newLine = string.gsub(line, "%[%]", "[x]")
-    elseif checked ~= nil then
-        newLine = string.gsub(line, "%[x%]", "[ ]")
-    else
-        newLine = "- [ ] " .. line
-    end
-    vim.api.nvim_set_current_line(newLine)
+  if uncheckedspace ~= nil then
+    newLine = string.gsub(line, "%[ %]", "[x]")
+  elseif unchecked ~= nil then
+    newLine = string.gsub(line, "%[%]", "[x]")
+  elseif checked ~= nil then
+    newLine = string.gsub(line, "%[x%]", "[ ]")
+  else
+    newLine = "- [ ] " .. line
+  end
+  vim.api.nvim_set_current_line(newLine)
 end
 
 function ToggleCheckboxVisual()
-    local start_line = vim.fn.line("'<")
-    local end_line = vim.fn.line("'>")
+  local start_line = vim.fn.line("'<")
+  local end_line = vim.fn.line("'>")
 
-    for line_num = start_line, end_line do
-        vim.cmd("normal! " .. line_num .. "gg")
-        ToggleCheckbox()
-        -- vim.api.nvim_buf_set_line(0, line_num - 1, line_num - 1, false, ToggleLineCheckbox(vim.api.nvim_buf_get_lines(0, line_num - 1, line_num, false)[1]))
-    end
+  for line_num = start_line, end_line do
+    vim.cmd("normal! " .. line_num .. "gg")
+    ToggleCheckbox()
+    -- vim.api.nvim_buf_set_line(0, line_num - 1, line_num - 1, false, ToggleLineCheckbox(vim.api.nvim_buf_get_lines(0, line_num - 1, line_num, false)[1]))
+  end
 end
 
 -- keymap.set("n", "<leader>t", ":lua ToggleCheckbox()<CR>")

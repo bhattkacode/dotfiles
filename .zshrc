@@ -37,6 +37,16 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
 
+# alias vibes='~/wayvibes/main ~/Downloads/creamy -v 5 > /dev/null 2>&1 &'
+function vibes() {
+  wayvibes --prompt
+  wayvibes ~/Downloads/creamy -v $1 > /dev/null 2>&1 &
+}
+
+function vibe() {
+  wayvibes ~/Downloads/creamy -v $1 > /dev/null 2>&1 &
+}
+
 alias scratch='hyprctl dispatch exec "[workspace special:term silent] alacritty --class scratch -e tmux new-session -A -s scratch"'
 alias ssp='ssh 192.168.0.195 -p 8022'
 alias ssmp='ssh 192.168.0.199 -p 8022'
