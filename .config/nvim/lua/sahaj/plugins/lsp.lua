@@ -169,6 +169,7 @@ return {
         },
         virtual_text = {
           severity = { min = vim.diagnostic.severity.WARN },
+          -- severity = { min = vim.diagnostic.severity.ERROR },
           -- prefix = '●'
           prefix = '•'
         },
@@ -203,13 +204,24 @@ return {
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
-        -- local disable_filetypes = { c = true, cpp = true }
-        return {
-          timeout_ms = 500,
-          -- lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-          lsp_fallback = true,
-        }
+        -- Disable with a global or buffer-local variable
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
+        end
+        return { timeout_ms = 500, lsp_format = "fallback" }
       end,
+
+      vim.api.nvim_create_user_command("ConformToggle", function(args)
+        if args.bang then
+          -- FormatDisable! will disable formatting just for this buffer
+          vim.b.disable_autoformat = not vim.b.disable_autoformat
+        else
+          vim.g.disable_autoformat = not vim.g.disable_autoformat
+        end
+      end, {
+        desc = "Toggle autoformat-on-save",
+        bang = true,
+      }),
       formatters_by_ft = {
         sh = { 'shfmt' },
         -- javascript = { 'prettier' },

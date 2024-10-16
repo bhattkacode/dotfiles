@@ -155,6 +155,25 @@ keymap.set("n", "<leader>lrn", ":lua vim.lsp.buf.rename()<CR>")
 keymap.set("n", "<leader>cmd", ":lua require('cmp').setup.buffer { enabled = false }<CR>")
 keymap.set("n", "<leader>cme", ":lua require('cmp').setup.buffer { enabled = true }<CR>")
 
+local show_only_errors = false
+function toggle_diagnostics()
+  if show_only_errors then
+    vim.diagnostic.config({
+      virtual_text = { severity = { min = vim.diagnostic.severity.WARN }, prefix = '•' }
+    })
+    show_only_errors = false
+    print("Showing warnings and errors")
+  else
+    vim.diagnostic.config({
+      virtual_text = { severity = { min = vim.diagnostic.severity.ERROR }, prefix = '•' }
+    })
+    show_only_errors = true
+    print("Showing only errors")
+  end
+end
+
+vim.keymap.set("n", "<leader>w", toggle_diagnostics)
+
 -- telescope
 keymap.set("n", "<leader>fm", "<cmd>Telescope file_browser<cr>", { desc = "File Browser" })
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "File Browser" })
@@ -179,13 +198,10 @@ keymap.set('n', '<leader>fc', function()
   end,
   { desc = "Find files in cwd" })
 
--- Hop
--- keymap.set({ "n", "x" }, "<leader><leader>", ":HopWord<CR>")
--- keymap.set({ "n", "x" }, "S", "<cmd>HopChar2<CR>")
--- keymap.set({ "n", "x" }, "s", "<cmd>Pounce<CR>")
--- keymap.set({ "n", "x" }, "f", "<cmd>HopChar1CurrentLineAC<CR>")
--- keymap.set({ "n", "x" }, "F", "<cmd>HopChar1CurrentLineBC<CR>")
 
+-- Conform
+keymap.set("n", "<leader>ct", ":ConformToggle<CR>")
+keymap.set("n", "<leader>cb", ":ConformToggle!<CR>")
 
 --runners
 -- keymap.set("n", "<leader>9", ":!python3 %<CR>")

@@ -1,0 +1,32 @@
+#!/bin/env python3
+import os
+from datetime import datetime, timedelta
+
+reboots = os.popen("last reboot").read().split("\n")
+time_per_day = {}
+date_fmt = "%a %b %d"
+time_fmt = "%H:%M"
+
+for reboot in reboots:
+    if len(time_per_day) == 7:
+        break
+    reboot = reboot.split()
+    if len(reboot) < 8:
+        continue
+
+    reboot_date = " ".join(reboot[5:7])
+    if reboot[-1] == "running":
+        reboot_time = datetime.strptime(reboot[-3], time_fmt)
+        time_per_day[reboot_date] = datetime.strptime(
+            datetime.strftime(datetime.now(), time_fmt), time_fmt) - reboot_time
+    else:
+        reboot_duration = datetime.strptime(reboot[-1][1:-1], time_fmt)
+        try:
+            time_per_day[reboot_date] += timedelta(
+                hours=reboot_duration.hour, minutes=reboot_duration.minute)
+        except KeyError:
+            time_per_day[reboot_date] = timedelta(
+                hours=reboot_duration.hour, minutes=reboot_duration.minute)
+for day in time_per_day:
+    print(day + ": " +
+          ":".join(str(time_per_day[day]).split(":")[0:2]))

@@ -11,6 +11,6 @@ export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_CONFIG_DIRS="/etc/xdg"
 
 # Bluetooth off when on battery
-if [[ $(cat /sys/class/power_supply/BAT0/status) == "Discharging" ]]; then 
-    bluetoothctl power off
-fi
+# if [[ $(cat /sys/class/power_supply/BAT0/status) == "Discharging" ]]; then 
+#     bluetoothctl power off
+# fi

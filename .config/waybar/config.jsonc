@@ -41,8 +41,8 @@
         "tooltip": false,
 		"on-click": "pavucontrol",
 		"on-click-right": "pamixer -t && pkill -RTMIN+10 waybar",
-        "on-scroll-up": "pamixer -i  1 --allow-boost",
-        "on-scroll-down": "pamixer -d  1 --allow-boost"
+        "on-scroll-up": "pamixer -i  2 --allow-boost",
+        "on-scroll-down": "pamixer -d  2 --allow-boost"
     },
 
     // "pulseaudio#microphone": {
