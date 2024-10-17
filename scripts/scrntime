@@ -4,8 +4,9 @@ from datetime import datetime, timedelta
 
 reboots = os.popen("last reboot").read().split("\n")
 time_per_day = {}
-date_fmt = "%a %b %d"
+date_fmt = "%b %d"
 time_fmt = "%H:%M"
+today = datetime.strftime(datetime.now(), date_fmt)
 
 for reboot in reboots:
     if len(time_per_day) == 7:
@@ -16,9 +17,11 @@ for reboot in reboots:
 
     reboot_date = " ".join(reboot[5:7])
     if reboot[-1] == "running":
-        reboot_time = datetime.strptime(reboot[-3], time_fmt)
-        time_per_day[reboot_date] = datetime.strptime(
-            datetime.strftime(datetime.now(), time_fmt), time_fmt) - reboot_time
+        reboot_time = datetime.strptime(
+            reboot[-3]+" "+reboot_date, "%H:%M %b %d")
+        current_time = datetime.strptime(datetime.strftime(datetime.now(
+        ), time_fmt)+" "+datetime.strftime(datetime.now(), date_fmt), "%H:%M %b %d")
+        time_per_day[reboot_date] = current_time - reboot_time
     else:
         reboot_duration = datetime.strptime(reboot[-1][1:-1], time_fmt)
         try:
@@ -27,6 +30,24 @@ for reboot in reboots:
         except KeyError:
             time_per_day[reboot_date] = timedelta(
                 hours=reboot_duration.hour, minutes=reboot_duration.minute)
+try:
+    with open("/home/sahaj/locktimes", "r") as f:
+        locktimes_dict = {}
+        locktimes = f.read().split("\n")
+        for locktime in locktimes:
+            if locktime:
+                locktime = locktime.split(" - ")
+                locktimes_dict[locktime[0]] = locktime[1]
+except FileNotFoundError:
+    pass
+
 for day in time_per_day:
-    print(day + ": " +
-          ":".join(str(time_per_day[day]).split(":")[0:2]))
+    try:
+        locktime = datetime.strptime(locktimes_dict[day], time_fmt)
+        locktime = timedelta(hours=locktime.hour, minutes=locktime.minute)
+        net_time = time_per_day[day] - locktime
+        formatted_net_time = ":".join(str(net_time).split(":")[0:2])
+        print(day + ": " + formatted_net_time)
+    except (NameError, KeyError):
+        formatted_time = ":".join(str(time_per_day[day]).split(":")[0:2])
+        print(day + ": " + formatted_time)

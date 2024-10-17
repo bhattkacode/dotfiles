@@ -54,11 +54,17 @@ else
   echo Invalid argument
   exit
 fi
-nohup bluetoothctl power off &
+bluetoothctl power off &
+disown
 sleep 0.5
-nohup bluetoothctl power on &
-# nohup bluetoothctl remove $id &
+bluetoothctl power on &
+disown
 sleep 0.1
-nohup bluetoothctl scan on &
+# bluetoothctl remove $id &
+# disown
+# sleep 0.1
+bluetoothctl scan on &
+disown
 sleep 0.1
-nohup bluetoothctl connect $id &
+bluetoothctl connect $id &
+disown

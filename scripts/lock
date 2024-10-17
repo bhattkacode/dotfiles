@@ -1,0 +1,45 @@
+#!/bin/env python3
+import subprocess
+from datetime import datetime
+import time
+
+start_time = time.time()
+subprocess.run("swaylock -c 000000 -F", shell=True)
+current_locktime = int(time.time() - start_time)
+hours, remainder = divmod(current_locktime, 3600)
+minutes, seconds = divmod(remainder, 60)
+current_locktime = str(f'{int(hours):02}:{int(minutes):02}')
+print(f"Screen was locked for {current_locktime}.")
+if current_locktime == "00:00":
+    exit(0)
+
+with open("/home/sahaj/locktimes", "a+") as f:
+    f.seek(0)
+    locktimes_str = f.read()
+
+today = datetime.today().strftime("%b %d")
+# today = "Jan 01"
+locktimes = locktimes_str.split("\n")
+if len(locktimes) > 0:
+    latest_locktime = locktimes[0].split(" - ")
+    if today == latest_locktime[0]:
+        print("Old locktime: " + latest_locktime[1])
+        latest_locktime[1] = " "+str(
+            int(latest_locktime[1]) + int(current_locktime))
+        print("New locktime: " + latest_locktime[1])
+        with open("/home/sahaj/locktimes", "r+") as f:
+            content = f.readlines()
+            content[0] = " - ".join(latest_locktime) + "\n"
+            f.seek(0)
+            f.writelines(content)
+        print("Written")
+        exit(0)
+
+print("Creating new locktime for today")
+new_locktime = today + " - " + str(current_locktime)
+print("New locktime: " + new_locktime)
+with open("/home/sahaj/locktimes", "r+") as f:
+    content = f.read()
+    f.seek(0)
+    f.write(new_locktime + "\n" + content)
+print("Written")

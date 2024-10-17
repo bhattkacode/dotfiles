@@ -1,6 +1,29 @@
 return {
   -- { 'j-hui/fidget.nvim',                         config = function() require('fidget').setup({ window = { winblend = 0 } }) end },
   {
+    "luckasRanarison/tailwind-tools.nvim",
+    name = "tailwind-tools",
+    build = ":UpdateRemotePlugins",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {}
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    ft = {
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "html",
+      "jsx",
+      "tsx"
+    },
+    opts = {}
+  },
+
+  {
     "folke/zen-mode.nvim",
     opts = {
       plugins = {
@@ -114,7 +137,8 @@ return {
       --     { expr = true, silent = true })
       -- vim.keymap.set('i', '<F33>', function() return vim.fn['codeium#CycleCompletions'](-1) end,
       --     { expr = true, silent = true })
-      vim.keymap.set('i', '<C-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+      vim.keymap.set('i', '<C-x>', function() return vim.fn['codeium#Clear']() end,
+        { expr = true, silent = true })
     end
   },
   {
@@ -173,7 +197,7 @@ return {
     config = function()
       local harpoon = require("harpoon")
       harpoon:setup()
-      vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+      vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
       vim.keymap.set("n", "<leader>e", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
       vim.keymap.set("n", "<leader>h", function() harpoon:list():select(1) end)
       vim.keymap.set("n", "<leader>j", function() harpoon:list():select(2) end)

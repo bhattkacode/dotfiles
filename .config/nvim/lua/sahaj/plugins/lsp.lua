@@ -12,7 +12,8 @@ return {
         group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
         callback = function(event)
           local map = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+            vim.keymap.set('n', keys, func,
+              { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
           --  To jump back, press <C-t>.
@@ -22,7 +23,8 @@ return {
 
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
-          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          map('gI', require('telescope.builtin').lsp_implementations,
+            '[G]oto [I]mplementation')
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
@@ -31,11 +33,13 @@ return {
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map('gs', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('gs', require('telescope.builtin').lsp_document_symbols,
+            '[D]ocument [S]ymbols')
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
-          map('gS', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+          map('gS', require('telescope.builtin').lsp_dynamic_workspace_symbols,
+            '[W]orkspace [S]ymbols')
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
@@ -77,7 +81,8 @@ return {
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      capabilities = vim.tbl_deep_extend('force', capabilities,
+        require('cmp_nvim_lsp').default_capabilities())
 
       -- Enable the following language servers
       --  Add any additional override configuration in the following tables. Available keys are:
@@ -146,7 +151,8 @@ return {
         'bashls',
         'clangd',
         'pylsp',
-        'tsserver'
+        -- 'tsserver',
+        'tailwindcss'
       })
 
       require('mason-lspconfig').setup { ensure_installed = ensure_installed }
@@ -155,7 +161,8 @@ return {
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities,
+              server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
         },
@@ -267,6 +274,7 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-buffer',
+      "onsails/lspkind-nvim",
     },
     config = function()
       -- See `:help cmp`
@@ -287,7 +295,8 @@ return {
         unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and
-            vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+            vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") ==
+            nil
       end
       cmp.setup {
         snippet = {
@@ -302,19 +311,19 @@ return {
         completion = { completeopt = 'menu,menuone,noinsert' },
 
         mapping = cmp.mapping.preset.insert {
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          -- ['<C-n>'] = cmp.mapping.select_next_item(),
+          -- ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.confirm { select = true },
-          ['<Down>'] = cmp.mapping(function(fallback)
-            cmp.close()
-            fallback()
-          end, { "i" }),
-          ['<Up>'] = cmp.mapping(function(fallback)
-            cmp.close()
-            fallback()
-          end, { "i" }),
+          -- ['<Down>'] = cmp.mapping(function(fallback)
+          --   cmp.close()
+          --   fallback()
+          -- end, { "i" }),
+          -- ['<Up>'] = cmp.mapping(function(fallback)
+          --   cmp.close()
+          --   fallback()
+          -- end, { "i" }),
 
           -- ["<Tab>"] = cmp.mapping(function(fallback)
           --     if cmp.visible() then
@@ -348,18 +357,27 @@ return {
         },
 
         formatting = {
-          format = function(entry, vim_item)
-            local label = vim_item.abbr
-            local truncated_label = vim.fn.strcharpart(label, 0, MAX_LABEL_WIDTH)
-            if truncated_label ~= label then
-              vim_item.abbr = truncated_label .. ELLIPSIS_CHAR
-            elseif string.len(label) < MIN_LABEL_WIDTH then
-              local padding = string.rep(' ', MIN_LABEL_WIDTH - string.len(label))
-              vim_item.abbr = label .. padding
-            end
-            return vim_item
-          end,
-        },
+          --   format = function(entry, vim_item)
+          --     local label = vim_item.abbr
+          --     local truncated_label = vim.fn.strcharpart(label, 0, MAX_LABEL_WIDTH)
+          --     if truncated_label ~= label then
+          --       vim_item.abbr = truncated_label .. ELLIPSIS_CHAR
+          --     elseif string.len(label) < MIN_LABEL_WIDTH then
+          --       local padding = string.rep(' ',
+          --         MIN_LABEL_WIDTH - string.len(label))
+          --       vim_item.abbr = label .. padding
+          --     end
+          --     return vim_item
+          --   end,
+          -- },
+          format = require("lspkind").cmp_format({
+            mode = 'symbol',
+            maxwidth = 50,
+            ellipsis_char = '…',
+            show_labelDetails = true,
+            before = require("tailwind-tools.cmp").lspkind_format
+          }),
+        }
       }
 
       local unlink_group = vim.api.nvim_create_augroup('UnlinkSnippet', {})
