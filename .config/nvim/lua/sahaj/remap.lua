@@ -2,6 +2,7 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap
 
+keymap.set("n", "<leader>q", 'cs"`ysa`}')
 
 -- keymap.set("n", "<leader>bt", ":let g:buftabline_show= !g:buftabline_show|call buftabline#update(0)<CR>",
 --     { silent = true })
@@ -124,8 +125,6 @@ keymap.set("n", "x", '"_x')
 keymap.set("n", "<leader>gd", ":lua vim.diagnostic.disable(0)<CR>")
 keymap.set("n", "<leader>ge", ":lua vim.diagnostic.enable(0)<CR>")
 
-keymap.set("i", "<C-x>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
-
 keymap.set("t", "<esc>", "<C-\\><C-n>")
 
 keymap.set("i", "<C-d>", "<Del>")
@@ -135,6 +134,8 @@ keymap.set({ "n", "v" }, "<C-n>", "nvgn")
 keymap.set("n", "<leader>cd", ":cd %:h<CR>", { desc = "Change cwd to buffer dir" })
 
 --plugins-keymaps
+keymap.set("n", "<leader>tc", ":TailwindConcealToggle<CR>")
+
 keymap.set("n", "<leader>z", "<Cmd>ZenMode<CR>")
 
 keymap.set("n", "<leader>cc", ":CccPick<CR>")
@@ -144,7 +145,7 @@ keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
 -- lsp
 keymap.set("n", "gd", ":lua vim.lsp.buf.definition()<CR>")
 -- keymap.set("n", "H", ":lua vim.lsp.buf.hover()<CR>")
--- keymap.set("i", "<C-h>", ":lua vim.lsp.buf.signature_help()<CR>")
+keymap.set("i", "<C-t>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
 keymap.set("n", "]d", ":lua vim.diagnostic.goto_next()<CR>")
 keymap.set("n", "[d", ":lua vim.diagnostic.goto_prev()<CR>")
 keymap.set("n", "<leader>vws", ":lua vim.lsp.buf.workspace_symbol()<CR>")
@@ -172,7 +173,7 @@ function toggle_diagnostics()
   end
 end
 
-vim.keymap.set("n", "<leader>w", toggle_diagnostics)
+vim.keymap.set("n", "<leader>tw", toggle_diagnostics)
 
 -- telescope
 keymap.set("n", "<leader>fm", "<cmd>Telescope file_browser<cr>", { desc = "File Browser" })

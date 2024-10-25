@@ -56,15 +56,12 @@ else
 fi
 bluetoothctl power off &
 disown
-sleep 0.5
+sleep 0.1
 bluetoothctl power on &
 disown
 sleep 0.1
-# bluetoothctl remove $id &
-# disown
-# sleep 0.1
 bluetoothctl scan on &
 disown
-sleep 0.1
+sleep 0.3
 bluetoothctl connect $id &
 disown

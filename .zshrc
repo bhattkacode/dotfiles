@@ -136,7 +136,7 @@ else
 nvim "$file_path"
     fi
 }
-ggl () { links www.google.com/search?q="$*"; }
+ggl () { links www.google.com/search\?q="$*"; }
 packbrowse() { pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'; }
 orphanrm() { echo "sudo pacman -Qtdq | sudo pacman -Rns -"; }
 adbcon () { sudo adb devices; sudo adb tcpip 5555; sudo adb connect $(adb shell ip route | awk '{print $9}'):5555;}

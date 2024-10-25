@@ -234,6 +234,12 @@ autocmd!
 au TextYankPost * silent! lua vim.highlight.on_yank({higroup="TabLineSel", timeout=200})
 augroup END
 ]]
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   pattern = "*.jsx,*.tsx",
+--   callback = function()
+--     vim.cmd("TailwindSortSync")
+--   end,
+-- })
 
 vim.o.statusline = " "
     .. "  "

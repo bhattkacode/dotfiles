@@ -7,7 +7,10 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
-    opts = {}
+    opts = {
+      document_color = { enabled = false },
+      conceal = { symbol = "…" }
+    }
   },
   {
     "windwp/nvim-ts-autotag",
@@ -145,7 +148,7 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     cmd = "NeoTree",
     keys = {
-      { "<leader>t", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
+      { "<leader>tt", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
     },
     opts = {},
     dependencies = {
@@ -236,7 +239,7 @@ return {
     keys = {
       { "<leader>mir", "<cmd>CellularAutomaton make_it_rain<CR>" } }
   },
-  { 'kylechui/nvim-surround', event = "VeryLazy",                             opts = { keymaps = { visual = "Y", visual_line = "gY", }, }, },
+  { 'kylechui/nvim-surround', event = "VeryLazy", opts = { keymaps = { visual = "Y", visual_line = "gY", }, }, },
   -- {
   --     "NvChad/nvim-colorizer.lua",
   --     config = function()
@@ -245,7 +248,7 @@ return {
   --     end,
   --     event = "VeryLazy",
   -- },
-  { "uga-rosa/ccc.nvim",      opts = { highlighter = { auto_enable = true } } },
+  -- { "uga-rosa/ccc.nvim",      opts = { highlighter = { auto_enable = true } } },
   -- {
   --     "max397574/colortils.nvim",
   --     cmd = "Colortils",

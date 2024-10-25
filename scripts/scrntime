@@ -36,8 +36,8 @@ try:
         locktimes = f.read().split("\n")
         for locktime in locktimes:
             if locktime:
-                locktime = locktime.split(" - ")
-                locktimes_dict[locktime[0]] = locktime[1]
+                locktime = locktime.split("-")
+                locktimes_dict[locktime[0].strip()] = locktime[1].strip()
 except FileNotFoundError:
     pass
 

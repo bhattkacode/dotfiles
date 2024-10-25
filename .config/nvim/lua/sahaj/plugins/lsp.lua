@@ -112,6 +112,10 @@ return {
           settings = {
             pylsp = {
               plugins = {
+                pycodestyle = {
+                  -- ignore = { '' },
+                  maxLineLength = 140
+                },
                 mccabe = {
                   threshold = 50
                 },
@@ -152,7 +156,7 @@ return {
         'clangd',
         'pylsp',
         -- 'tsserver',
-        'tailwindcss'
+        'tailwindcss',
       })
 
       require('mason-lspconfig').setup { ensure_installed = ensure_installed }
@@ -233,6 +237,7 @@ return {
         sh = { 'shfmt' },
         -- javascript = { 'prettier' },
         html = { 'prettierd' },
+        javascriptreact = { 'prettierd' },
         -- css = { 'prettierd' },
       }
       -- Conform can also run multiple formatters sequentially

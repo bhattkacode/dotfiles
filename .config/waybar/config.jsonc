@@ -13,9 +13,9 @@
         "on-scroll-up": "hyprctl dispatch workspace e+1",
         "on-scroll-down": "hyprctl dispatch workspace e-1"
      },
-	"clock#1": { "format": "{:%a}"},
-	"clock#2": { "format": "{:%d-%m %b}"},
-	"clock#3": { "format": "{:%I:%M %p}"},
+	"clock#1": { "format": "{:%a}", "tooltip": false },
+	"clock#2": { "format": "{:%d-%m %b}", "tooltip": false},
+	"clock#3": { "format": "{:%I:%M %p}", "tooltip": false},
 
     "custom/scratchOutput":{
     // "max-length": 5,
