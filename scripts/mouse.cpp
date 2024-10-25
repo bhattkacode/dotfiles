@@ -152,10 +152,8 @@ int main() {
         case KEY_J:
         case KEY_K:
         case KEY_L:
-          // You can add logic here to pass the keys to the system if needed
           break;
         default:
-          // Handle other key events
           break;
         }
       }
