@@ -10,7 +10,7 @@
   - sends notifications also
 - `bat-notif.sh` daemon for battery notifications
 - `blu-notif` notifications for bluetooth
-- `dualmonitor/` scripts to setup some external hdmi monitor
+- `dualmonitor/` scripts to setup some external hdmi monitor (in Xorg)
 - `cal.py` displays current event from your google calendar(put your credentials.json in your home directory)
   - download credentials.json by making a project google console/cloud, create credentials, then choose Oauth client api, then choose WebApp then download credentials
   - go to display_current_events() funcion in cal.py and change the calendar ids in calendar list to your ones(primary will be your first calendar, then you have to add ids for other calendars if you want)
