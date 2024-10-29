@@ -19,7 +19,6 @@ file_list=(
   "$HOME/.config/dunst/"
   "$HOME/.config/wofi/"
   "$HOME/.config/nvim/"
-  "$HOME/.config/Thunar/uca.xml"
   "$HOME/.config/yay/config.json"
   "$HOME/.config/gtk-3.0/"
   "$HOME/.config/alacritty/alacritty.toml"

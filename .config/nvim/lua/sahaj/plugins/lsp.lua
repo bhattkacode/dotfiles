@@ -96,7 +96,7 @@ return {
 
           cmd = {
             "clangd",
-            -- "--fallback-style=webkit",
+            -- "--fallback-style=\"{'ColumnLimit': '1000'}\"",
           },
           capabilities = {
             textDocument = {

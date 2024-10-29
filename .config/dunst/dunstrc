@@ -19,6 +19,8 @@
     # will be ignored.
     follow = mouse
 
+    highlight = "#b4befe"
+
     ### Geometry ###
 
     # dynamic width from 0 to 300
