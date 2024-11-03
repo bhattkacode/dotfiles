@@ -42,6 +42,7 @@ function vibes() {
   nohup wayvibes ~/Downloads/creamy -v $1 &
 }
 
+
 alias macos="docker run -it \
 --device /dev/kvm \
 -p 50922:10022 \
@@ -57,7 +58,8 @@ alias macos="docker run -it \
 seraphix/docker-osx:sonoma
 "
 alias dk='line=$(sed -n "3p" /etc/keyd/default.conf); if [[ $line == \#* ]]; then sudo sed -i "3s/^#//" /etc/keyd/default.conf; else sudo sed -i "3s/^/#/" /etc/keyd/default.conf; fi; sudo keyd reload'
-alias scratch='hyprctl dispatch exec "[workspace special:term silent] alacritty --class scratch -e tmux new-session -A -s scratch"'
+alias scratch="hyprctl dispatch exec '[workspace special:term silent] foot -a scratch -e tmux new-session -A -s scratch'"
+alias oscratch="hyprctl dispatch exec '[workspace special:term silent] foot -o colors.alpha=1 -a scratch -e tmux new-session -A -s scratch' & disown; exit"
 alias ssp='ssh 192.168.0.195 -p 8022'
 alias ssmp='ssh 192.168.0.199 -p 8022'
 alias ssn='ssh 0.tcp.in.ngrok.io -p '
