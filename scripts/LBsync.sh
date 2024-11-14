@@ -2,8 +2,9 @@
 
 destination_dir="/media/data/LinuxBackup/dotfiles/"
 
-if [[ $1 = "nodata" ]]; then
+if [[ $1 = "nodata" ]] || ! [[ -w $destination_dir ]]; then
   destination_dir="/home/sahaj/LinuxBackup/dotfiles/"
+  echo "Not using 'Data' partition. Defaulting to $destination_dir"
 fi
 
 cd $destination_dir

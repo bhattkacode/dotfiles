@@ -147,6 +147,8 @@ function opaque()
   end
 end
 
+-- opaque()
+
 vim.cmd [[let g:buftabline_show = 1]]
 
 vim.opt.guicursor = {
@@ -227,7 +229,12 @@ end, {})
 --     group = highlight_group,
 --     pattern = '*',
 -- })
-
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    vim.opt.formatoptions:remove { "c", "r", "o" }
+  end,
+  desc = "Disable New Line Comment",
+})
 vim.cmd [[
 augroup highlight_yank
 autocmd!

@@ -20,5 +20,5 @@
 - `mouseSim`/`mouse.cpp` to simulate mouse with keyboard shortcuts
 - `startScratch.sh` and `getScratchOutput.sh` to toggle scratchpad terminal and get its content(`nscratch.sh for hyprland`)
 - `lock` to lock the screen and save/update the locked time for the day
-- `scrntime` to display the screen time for past 7 days (corrected with lock times)
+- `scrntime <num>` to display the screen time for past `<num>` days (corrected with lock times)
 

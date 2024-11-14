@@ -8,7 +8,8 @@ stty stop undef
 
 # Enable colors and change prompt:
 autoload -U colors && colors
-PS1="%F{cyan}%1~ %F{red}%B>%f%F{green}%B>%f%b "
+#›〉❫❭❯❯
+PS1="%F{cyan}%1~ %F{magenta}%B❯ %f%b"
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:~/scripts:/sbin/:~/.local/bin:~/.cargo/bin
 
 # History
@@ -70,7 +71,7 @@ alias dsa='nvim ~/notes/tech/dsaRoadmap.md'
 alias dsaq='nvim ~/notes/tech/dsaq.md +"set nowrap"'
 alias lnsync='LBsync.sh && notesync'
 alias nvn='cd ~/notes && nv -c "Telescope find_files"'
-alias notesync='cd ~/notes && git add . && git commit -m "vault backup" && git push'
+alias notesync='cd ~/notes && git add . && git commit -m "notes backup" && git push'
 alias unimatrix='unimatrix -n -s 96 -l o'
 alias ls='ls -a --group-directories-first --color=always'
 alias nv='nvim'
@@ -185,6 +186,7 @@ countdown() {
         printf '%s\r' "$(date -u -d "@$time" +%H:%M:%S)"
         sleep 0.5
     done
+    notify-send "Time's up"
     /usr/bin/paplay /usr/share/sounds/freedesktop/stereo/complete.oga
 }
 
@@ -240,3 +242,5 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 
 eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(starship init zsh)"
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"

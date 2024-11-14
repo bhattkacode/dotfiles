@@ -1,9 +1,9 @@
 #!/bin/env bash
 
 output=$(tmux capture-pane -pt scratch:.1 | awk '/./{line=$0} END{print line}')
-class="amogus"
-if [[ "$output" == *">>"* ]] || [[ "$(hyprctl activewindow | grep initialClass)" == *"scratch" ]] || [[ "$(tmux list-panes -t scratch:.1 -F '#{pane_current_command}')" == "nvim" ]]; then
-    true
+class="normal"
+if [[ "$output" == *"❯"* ]] || [[ "$(hyprctl activewindow | grep initialClass)" == *"scratch" ]] || [[ "$(tmux list-panes -t scratch:.1 -F '#{pane_current_command}')" == "nvim" ]]; then
+  true
 else
   n=30
   string_length=${#output}
@@ -12,7 +12,7 @@ else
     output="…$(expr "$output" : ".*\(.\{$n\}\)$")"
   fi
   if [[ $output =~ \[[^][\]]*\/[^][\]]*\]([:?.?]|$) ]] || [[ "$output" == *"password for"* ]]; then
-      class="urgent"
+    class="urgent"
   fi
   echo '{"text": "'"$output"'", "tooltip": "yo", "class": "'"$class"'"}'
 fi

@@ -1,5 +1,17 @@
 return {
   -- { 'j-hui/fidget.nvim',                         config = function() require('fidget').setup({ window = { winblend = 0 } }) end },
+  -- {
+  --   "nvim-lualine/lualine.nvim",
+  --   opts = {
+  --     options = {
+  --       theme = "catppuccin",
+  --       -- ... the rest of your lualine config
+  --       section_separators = { left = '', right = '' },
+  --       component_separators = { left = '', right = '' }
+  --     }
+  --   }
+  -- },
+  { "nvim-treesitter/nvim-treesitter-context" },
   {
     "luckasRanarison/tailwind-tools.nvim",
     name = "tailwind-tools",
