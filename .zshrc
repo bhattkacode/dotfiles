@@ -8,7 +8,6 @@ stty stop undef
 
 # Enable colors and change prompt:
 autoload -U colors && colors
-#›〉❫❭❯❯
 PS1="%F{cyan}%1~ %F{magenta}%B❯ %f%b"
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:~/scripts:/sbin/:~/.local/bin:~/.cargo/bin
 
@@ -42,7 +41,6 @@ bindkey '^x^e' edit-command-line
 function vibes() {
   nohup wayvibes ~/Downloads/creamy -v $1 &
 }
-
 
 alias macos="docker run -it \
 --device /dev/kvm \
@@ -145,14 +143,15 @@ orphanrm() { echo "sudo pacman -Qtdq | sudo pacman -Rns -"; }
 adbcon () { sudo adb devices; sudo adb tcpip 5555; sudo adb connect $(adb shell ip route | awk '{print $9}'):5555;}
 pcs() { 
     package_list=$(pacman -Ss | awk -F '/' '{print $2}' | awk '{print $1}' | sort);
-    package=$(echo "$package_list" | fzf --preview 'pacman -Si {}' --layout=reverse --query="'");
-    if [ "$package" != "" ];then
-        echo -ne "sudo pacman -Syu $package\nExecute?(Y/n/no(c)onfirm)"
+    packages=$(echo "$package_list" | fzf --multi --preview 'pacman -Si {}' --layout=reverse --query="'");
+   packages=$(echo "$packages" | tr '\n' ' ' | sed 's/[[:space:]]*$//')
+    if [ "$packages" != "" ];then
+        echo -ne "sudo pacman -Syu $packages\nExecute?(Y/n/no(c)onfirm)"
         read yn;
         if [[ "$yn" == "y" ]] || [[ "$yn" == "" ]];then
-            sudo pacman -Syu "$package"
+            sudo pacman -Syu $(echo $packages)
         elif [[ "$yn" == "c" ]];then
-            sudo pacman -Syu --noconfirm "$package"
+            sudo pacman -Syu --noconfirm $(echo $packages)
         fi
     fi
 }
