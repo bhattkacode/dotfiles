@@ -65,21 +65,17 @@ void moveMouseWhileKeyHeld(std::atomic<bool> &moveH, std::atomic<bool> &moveJ,
 
     if (moveH) {
       std::system(
-          ("echo 'mousemove -" + std::to_string(speed) + " 0' | dotoolc")
-              .c_str());
+          ("echo 'mousemove -" + std::to_string(speed) + " 0' | dotoolc").c_str());
     }
     if (moveJ) {
-      std::system(("echo 'mousemove 0 " + std::to_string(speed) + "' | dotoolc")
-                      .c_str());
+      std::system(("echo 'mousemove 0 " + std::to_string(speed) + "' | dotoolc").c_str());
     }
     if (moveK) {
       std::system(
-          ("echo 'mousemove 0 -" + std::to_string(speed) + "' | dotoolc")
-              .c_str());
+          ("echo 'mousemove 0 -" + std::to_string(speed) + "' | dotoolc").c_str());
     }
     if (moveL) {
-      std::system(("echo 'mousemove " + std::to_string(speed) + " 0' | dotoolc")
-                      .c_str());
+      std::system(("echo 'mousemove " + std::to_string(speed) + " 0' | dotoolc").c_str());
     }
 
     std::this_thread::sleep_for(
@@ -104,26 +100,24 @@ int main() {
   }
 
   std::atomic<bool> moveH(false), moveJ(false), moveK(false), moveL(false);
-  std::atomic<bool> superPressed(false);
-  std::atomic<bool> speedDecrease(
-      false); // Flag for reduced speed when 'Z' is pressed
+  std::atomic<bool> altPressed(false);
+  std::atomic<bool> speedDecrease(false); // Flag for reduced speed when 'Z' is pressed
 
   // Start the mouse movement thread
-  std::thread movementThread(moveMouseWhileKeyHeld, std::ref(moveH),
-                             std::ref(moveJ), std::ref(moveK), std::ref(moveL),
-                             std::ref(speedDecrease));
+  std::thread movementThread(moveMouseWhileKeyHeld, std::ref(moveH), std::ref(moveJ),
+                             std::ref(moveK), std::ref(moveL), std::ref(speedDecrease));
 
   while (true) {
     struct input_event ev;
     rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_NORMAL, &ev);
     if (rc == 0 && ev.type == EV_KEY) {
-      if (ev.code == KEY_LEFTMETA || ev.code == KEY_RIGHTMETA) {
-        superPressed = (ev.value != 0);
-        if (!superPressed) { // Reset on Super key release
+      if (ev.code == KEY_LEFTALT || ev.code == KEY_RIGHTALT) {
+        altPressed = (ev.value != 0);
+        if (!altPressed) { // Reset on alt key release
           moveH = moveJ = moveK = moveL = false;
           speedDecrease = false;
         }
-      } else if (superPressed) {
+      } else if (altPressed) {
         switch (ev.code) {
         case KEY_H:
           moveH = (ev.value != 0);
@@ -138,15 +132,14 @@ int main() {
           moveL = (ev.value != 0);
           break;
         case KEY_Z:
-          speedDecrease =
-              (ev.value != 0); // Reduce speed when 'Z' is held with 'Super'
+          speedDecrease = (ev.value != 0); // Reduce speed when 'Z' is held with 'alt'
           break;
         default:
-          break; // Ignore other keys when Super is pressed
+          break; // Ignore other keys when alt is pressed
         }
       } else {
         // Process other key events normally (i.e., H, J, K, L will be typed if
-        // Super is not pressed)
+        // alt is not pressed)
         switch (ev.code) {
         case KEY_H:
         case KEY_J:

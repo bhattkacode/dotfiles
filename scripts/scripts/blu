@@ -21,7 +21,7 @@ elif [[ $1 == a ]]; then
   bluetoothctl power off
   bluetoothctl power on
   bluetoothctl scan on
-  sleep 2
+  sleep 1
   bluetoothctl connect $id
   exit
 

@@ -71,9 +71,15 @@ return {
     end
   },
   -- {"ziontee113/icon-picker.nvim", cmd={"IconPickerInsert", "IconPickerYank", "IconPickerNormal"}, opts={}},
-  { "dhruvasagar/vim-table-mode", ft = "markdown" },
-  { "jmbuhr/otter.nvim",          ft = "markdown" },
-  { 'nvim-pack/nvim-spectre',     cmd = "Spectre" },
+  {
+    "dhruvasagar/vim-table-mode",
+    ft = "markdown",
+    config = function()
+      vim.keymap.set("n", "<leader>tt", "<cmd>Tableize/|<cr>")
+    end,
+  },
+  { "jmbuhr/otter.nvim",      ft = "markdown" },
+  { 'nvim-pack/nvim-spectre', cmd = "Spectre" },
   {
     "epwalsh/obsidian.nvim",
     version = "*",

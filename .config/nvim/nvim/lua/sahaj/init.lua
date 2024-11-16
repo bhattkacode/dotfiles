@@ -2,6 +2,7 @@ require("sahaj.remap")
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
 -- Lazy initialization
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -32,9 +33,9 @@ codeiumString = " {.}%3{codeium#GetStatusString()}"
 --     })
 --     codeiumString = " {.}%3{codeium#GetStatusString()}"
 -- end
-
-file = vim.fn.expand('%')
-
+--
+-- file = vim.fn.expand('%')
+--
 -- If text type file, use Light plugins
 -- if (not file:find(".", 1, true) or file:find(".txt", 1, true) or file:find(".md", 1, true)) and file ~= "" then
 --     require("lazy").setup({
