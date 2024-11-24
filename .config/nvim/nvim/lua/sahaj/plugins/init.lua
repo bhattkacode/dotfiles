@@ -1,16 +1,4 @@
 return {
-  -- { 'j-hui/fidget.nvim',                         config = function() require('fidget').setup({ window = { winblend = 0 } }) end },
-  -- {
-  --   "nvim-lualine/lualine.nvim",
-  --   opts = {
-  --     options = {
-  --       theme = "catppuccin",
-  --       -- ... the rest of your lualine config
-  --       section_separators = { left = '', right = '' },
-  --       component_separators = { left = '', right = '' }
-  --     }
-  --   }
-  -- },
   { "nvim-treesitter/nvim-treesitter-context" },
   {
     "luckasRanarison/tailwind-tools.nvim",
@@ -22,64 +10,27 @@ return {
     opts = {
       document_color = { enabled = false },
       conceal = { symbol = "…" }
-    }
+    },
+    ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "html", "jsx", "tsx" }
   },
   {
     "windwp/nvim-ts-autotag",
-    ft = {
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-      "html",
-      "jsx",
-      "tsx"
-    },
+    ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "html", "jsx", "tsx" },
     opts = {}
   },
 
-  {
-    "folke/zen-mode.nvim",
-    opts = {
-      plugins = {
-        options = {
-          ruler = true,
-        },
-        tmux = { enabled = true }
-      }
-    },
-    cmd = "ZenMode"
-  },
+  { "folke/zen-mode.nvim",                    opts = { plugins = { options = { ruler = true, }, tmux = { enabled = true } } }, cmd = "ZenMode" },
   "mg979/vim-visual-multi",
-  -- {
-  --     "kawre/leetcode.nvim",
-  --     build = ":TSUpdate html",
-  --     lazy = "leetcode.nvim" ~= vim.fn.argv()[1],
-  --     opts = { arg = "leetcode.nvim" },
-  --     -- dependencies = { "rcarriga/nvim-notify", },
-  -- },
-  { "nvim-telescope/telescope-file-browser.nvim" },
   { 'nvim-telescope/telescope-ui-select.nvim' },
-  -- { "ap/vim-buftabline" },
-  { 'wakatime/vim-wakatime',                     lazy = false },
-  {
-    'xiyaowong/telescope-emoji.nvim',
-    cmd = "Telescope emoji",
-    opts = {},
-    config = function()
-      require("telescope").load_extension("emoji")
-    end
-  },
-  -- {"ziontee113/icon-picker.nvim", cmd={"IconPickerInsert", "IconPickerYank", "IconPickerNormal"}, opts={}},
+  { 'wakatime/vim-wakatime',                  lazy = false },
   {
     "dhruvasagar/vim-table-mode",
-    ft = "markdown",
+    keys = { "<leader>tt", },
     config = function()
       vim.keymap.set("n", "<leader>tt", "<cmd>Tableize/|<cr>")
     end,
   },
-  { "jmbuhr/otter.nvim",      ft = "markdown" },
-  { 'nvim-pack/nvim-spectre', cmd = "Spectre" },
+  -- { "jmbuhr/otter.nvim",      ft = "markdown" },
   {
     "epwalsh/obsidian.nvim",
     version = "*",
@@ -99,22 +50,9 @@ return {
     },
   },
   {
-    "ThePrimeagen/vim-apm",
-    config = function()
-      local apm = require("vim-apm")
-
-      apm:setup({})
-      vim.keymap.set("n", "<leader>pm", function() apm:toggle_monitor() end)
-    end
-
-  },
-  --    { 'declancm/cinnamon.nvim', opts = { default_delay = 4 } },
-  {
     "folke/flash.nvim",
     event = "VeryLazy",
-    ---@type Flash.Config
     opts = { modes = { search = { enabled = false }, char = { enabled = false } } },
-    -- stylua: ignore
     keys = {
       { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
       -- {
@@ -195,23 +133,6 @@ return {
     opts = {}
   },
 
-  -- {
-  --     "m4xshen/hardtime.nvim",
-  --
-  --     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-  --     opts = {
-  --         disabled_keys = {
-  --             ["<Up>"] = {},
-  --             ["<Down>"] = {},
-  --             ["<Left>"] = {},
-  --             ["<Right>"] = {},
-  --         },
-  --         max_count = 8,
-  --         disable_mouse = false,
-  --         max_time = 500,
-  --         allow_different_key = true,
-  --     },
-  -- },
   {
     'theprimeagen/harpoon',
     branch = "harpoon2",
@@ -236,12 +157,10 @@ return {
       }
     end,
   },
-  "mbbill/undotree",
-  { "catppuccin/nvim",          name = "catppuccin", priority = 1000, },
-  { "ThePrimeagen/vim-be-good", lazy = true,         cmd = "VimBeGood" },
+  { "mbbill/undotree" },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000, },
   {
     'nvim-telescope/telescope-fzf-native.nvim',
-
     build =
     'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
   },
@@ -251,33 +170,7 @@ return {
     opts = {},
 
   },
-  {
-    "Eandrju/cellular-automaton.nvim",
-    cmd = "CellularAutomaton",
-    keys = {
-      { "<leader>mir", "<cmd>CellularAutomaton make_it_rain<CR>" } }
-  },
-  { 'kylechui/nvim-surround', event = "VeryLazy", opts = { keymaps = { visual = "Y", visual_line = "gY", }, }, },
-  -- {
-  --     "NvChad/nvim-colorizer.lua",
-  --     config = function()
-  --         require("colorizer").setup { user_default_options = {
-  --             mode = "virtualtext" } }
-  --     end,
-  --     event = "VeryLazy",
-  -- },
-  -- { "uga-rosa/ccc.nvim",      opts = { highlighter = { auto_enable = true } } },
-  -- {
-  --     "max397574/colortils.nvim",
-  --     cmd = "Colortils",
-  --     config = function()
-  --         require("colortils").setup()
-  --     end,
-  -- }
-  -- {
-  --     "tzachar/local-highlight.nvim",
-  --     opts = {}
-  -- }
+  { 'kylechui/nvim-surround', event = "VeryLazy", opts = { keymaps = { visual = "Y" }, }, },
   {
     "aserowy/tmux.nvim",
     opts = {

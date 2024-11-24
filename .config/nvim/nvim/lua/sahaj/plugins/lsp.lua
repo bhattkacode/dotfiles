@@ -144,6 +144,11 @@ return {
           },
         },
       }
+      require('lspconfig').qmlls.setup({
+        cmd = {
+          "qmlls6",
+        },
+      })
 
       --  You can press `g?` for help in this menu.
       require('mason').setup()

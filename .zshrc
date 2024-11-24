@@ -42,30 +42,11 @@ function vibes() {
   nohup wayvibes ~/Downloads/creamy -v $1 &
 }
 
-alias macos="docker run -it \
---device /dev/kvm \
--p 50922:10022 \
--v /tmp/.X11-unix:/tmp/.X11-unix \
--e 'DISPLAY=${DISPLAY:-:0.0}' \
--e GENERATE_UNIQUE=true \
--e CPU='Haswell-noTSX' \
--e CPUID_FLAGS='kvm=on,vendor=GenuineIntel,+invtsc,vmware-cpuid-freq=on' \
--e RAM=8 \
--e HEIGHT=1080 \
--e WIDTH=1920 \
--e MASTER_PLIST_URL='https://raw.githubusercontent.com/sickcodes/osx-serial-generator/master/config-custom.plist' \
-seraphix/docker-osx:sonoma
-"
+alias refl="reflector -c India >> /etc/pacman.d/mirrorlist && reflector >> /etc/pacman.d/mirrorlist"
 alias dk='line=$(sed -n "3p" /etc/keyd/default.conf); if [[ $line == \#* ]]; then sudo sed -i "3s/^#//" /etc/keyd/default.conf; else sudo sed -i "3s/^/#/" /etc/keyd/default.conf; fi; sudo keyd reload'
 alias scratch="hyprctl dispatch exec '[workspace special:term silent] foot -a scratch -e tmux new-session -A -s scratch'"
 alias oscratch="hyprctl dispatch exec '[workspace special:term silent] foot -o colors.alpha=1 -a scratch -e tmux new-session -A -s scratch' & disown; exit"
-alias ssp='ssh 192.168.0.195 -p 8022'
-alias ssmp='ssh 192.168.0.199 -p 8022'
-alias ssn='ssh 0.tcp.in.ngrok.io -p '
-# alias nvl='nvim ~/leet.cpp +"lua vim.diagnostic.disable(0)" +"lua require(\"cmp\").setup.buffer{enabled=false}"'
-alias nvl='nvim ~/Leetcode/leet.cpp +"lua vim.diagnostic.disable(0)" +"CodeiumDisable" +"lua opaque()" +":,%d _"'
-# alias nvl='nvim ~/Leetcode/leet.cpp +"lua vim.diagnostic.disable(0)" +"lua require(\"cmp\").setup.buffer{enabled=false}" +"CodeiumDisable" +"lua opaque()" +":,%d _"'
-alias dsa='nvim ~/notes/tech/dsaRoadmap.md'
+alias nvl='nvim ~/Leetcode/leet.cpp +"lua vim.diagnostic.disable(0)" +"CodeiumDisable" +"lua opaque()" +":,%d _" +"norm i#include <bits/stdc++.h>" +"norm ousing namespace std;" +"norm o"'
 alias dsaq='nvim ~/notes/tech/dsaq.md +"set nowrap"'
 alias lnsync='LBsync.sh && notesync'
 alias nvn='cd ~/notes && nv -c "Telescope find_files"'
