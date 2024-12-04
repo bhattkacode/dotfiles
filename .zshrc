@@ -47,7 +47,7 @@ alias dk='line=$(sed -n "3p" /etc/keyd/default.conf); if [[ $line == \#* ]]; the
 alias scratch="hyprctl dispatch exec '[workspace special:term silent] foot -a scratch -e tmux new-session -A -s scratch'"
 alias oscratch="hyprctl dispatch exec '[workspace special:term silent] foot -o colors.alpha=1 -a scratch -e tmux new-session -A -s scratch' & disown; exit"
 alias nvl='nvim ~/Leetcode/leet.cpp +"lua vim.diagnostic.disable(0)" +"CodeiumDisable" +"lua opaque()" +":,%d _" +"norm i#include <bits/stdc++.h>" +"norm ousing namespace std;" +"norm o"'
-alias dsaq='nvim ~/notes/tech/dsaq.md +"set nowrap"'
+alias dsaq='nvim ~/notes/tech/dsaq.md +"set nowrap" +CodeiumDisable'
 alias lnsync='LBsync.sh && notesync'
 alias nvn='cd ~/notes && nv -c "Telescope find_files"'
 alias notesync='cd ~/notes && git add . && git commit -m "notes backup" && git push'
@@ -59,7 +59,7 @@ alias nvsu='sudo -E -s nvim'
 alias pymath='python3 -ic "from math import *"'
 alias cpcmd='fc -nl -1 | wl-copy'
 alias todo="glow ~/notes/todo.md"
-alias todon="nvim ~/notes/todo.md"
+alias todon="nvim ~/notes/todo.md +CodeiumDisable"
 alias pcon="ssh u0_a251@192.168.0.199 -p8022 -L 9901:localhost:5901"
 alias vncv="vncviewer localhost:9901"
 alias ttoggle="xinput --list-props 13 | grep 'Device Enabled' | cut -f2 -d ':' | xargs -I {} bash -c 'if [ {} -eq 0 ]; then xinput --enable 13; else xinput --disable 13; fi'"

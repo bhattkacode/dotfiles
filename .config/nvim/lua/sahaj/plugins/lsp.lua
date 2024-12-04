@@ -144,6 +144,11 @@ return {
           },
         },
       }
+      require('lspconfig').qmlls.setup({
+        cmd = {
+          "qmlls6",
+        },
+      })
 
       --  You can press `g?` for help in this menu.
       require('mason').setup()
@@ -186,7 +191,6 @@ return {
         },
         float = { border = "rounded" },
       })
-      local hi
       vim.cmd [[
             " sign define DiagnosticSignError text= texthl=DiagnosticError
             " sign define DiagnosticSignWarning text= texthl=DiagnosticWarning
@@ -208,6 +212,8 @@ return {
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
         border = "rounded",
       })
+      vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers['signature_help'],
+        { border = 'rounded' })
     end,
   },
   {
@@ -279,6 +285,7 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
       "onsails/lspkind-nvim",
     },
     config = function()
@@ -310,7 +317,10 @@ return {
           end,
         },
         window = {
-          completion = cmp.config.window.bordered(),
+          completion = cmp.config.window.bordered({
+            --   border = "none",
+            --   winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+          }),
           documentation = cmp.config.window.bordered(),
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
@@ -321,6 +331,15 @@ return {
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.confirm { select = true },
+          ["<C-e>"] = cmp.mapping({
+            i = function()
+              if cmp.visible() then
+                cmp.abort()
+              else
+                cmp.complete()
+              end
+            end,
+          }),
           -- ['<Down>'] = cmp.mapping(function(fallback)
           --   cmp.close()
           --   fallback()
@@ -359,6 +378,7 @@ return {
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'buffer' },
+          { name = 'nvim_lsp_signature_help' },
         },
 
         formatting = {
