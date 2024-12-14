@@ -1,4 +1,40 @@
 return {
+  {
+    'nvim-lualine/lualine.nvim',
+    opts = {
+      options = {
+        theme = 'auto',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+      },
+      sections = {
+        lualine_a = { 'branch' },
+        lualine_b = { { 'filename', new_file = true, path = 1 } },
+        lualine_c = { 'diagnostics' },
+        lualine_x = { 'diff', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
+      },
+    }
+  },
+  {
+    'stevearc/oil.nvim',
+    cmd = "Oil",
+    opts = {},
+  },
+  {
+    "folke/trouble.nvim",
+    opts = {},
+    cmd = "Trouble",
+  },
+  { "nvim-pack/nvim-spectre",                 cmd = "Spectre" },
+  {
+    "uga-rosa/ccc.nvim",
+    config = function()
+      local ccc = require("ccc")
+      ccc.setup { highlighter = { auto_enable = true, lsp = true } }
+    end,
+  },
   { "nvim-treesitter/nvim-treesitter-context" },
   {
     "luckasRanarison/tailwind-tools.nvim",
@@ -22,7 +58,7 @@ return {
   { "folke/zen-mode.nvim",                    opts = { plugins = { options = { ruler = true, }, tmux = { enabled = true } } }, cmd = "ZenMode" },
   "mg979/vim-visual-multi",
   { 'nvim-telescope/telescope-ui-select.nvim' },
-  -- { 'wakatime/vim-wakatime',                  lazy = false },
+  { 'wakatime/vim-wakatime',                  lazy = false },
   {
     "dhruvasagar/vim-table-mode",
     keys = { "<leader>tt", },
@@ -153,12 +189,12 @@ return {
     opts = {},
     config = function()
       require("ibl").setup {
-        scope = { enabled = false },
+        scope = { enabled = false, highlight = { "WarningMsg" }, show_start = false, show_end = false },
       }
     end,
   },
   { "mbbill/undotree" },
-  { "catppuccin/nvim",                        name = "catppuccin", priority = 1000, },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000, },
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     build =

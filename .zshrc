@@ -42,6 +42,24 @@ function vibes() {
   nohup wayvibes ~/Downloads/creamy -v $1 &
 }
 
+function rm() {
+  arg=$1;
+  if [[ "$arg" == "-r" || "$arg" == "-rf" || "$arg" == "-fr" ]]; then
+    if [ -z "$2" ]; then
+      echo "No file specified"
+      return 1
+    else
+      arg=$2
+    fi
+  fi
+  mv $arg ~/.local/share/Trash/files/
+  echo "[Trash Info]" > ~/.local/share/Trash/info/$arg.trashinfo
+  echo "Path=$(readlink -f $arg)" >> ~/.local/share/Trash/info/$arg.trashinfo
+  echo "DeletionDate=$(date +%Y-%m-%dT%H:%M:%S)" >> ~/.local/share/Trash/info/$arg.trashinfo
+}
+
+alias dunstHist="dunstctl history | jq '.data[0][] | .summary.data + \": \" + .body.data' -r"
+alias demn=~/demn/demn.py
 alias refl="reflector -c India >> /etc/pacman.d/mirrorlist && reflector >> /etc/pacman.d/mirrorlist"
 alias dk='line=$(sed -n "3p" /etc/keyd/default.conf); if [[ $line == \#* ]]; then sudo sed -i "3s/^#//" /etc/keyd/default.conf; else sudo sed -i "3s/^/#/" /etc/keyd/default.conf; fi; sudo keyd reload'
 alias scratch="hyprctl dispatch exec '[workspace special:term silent] foot -a scratch -e tmux new-session -A -s scratch'"
@@ -224,3 +242,6 @@ export VISUAL='nvim'
 eval "$(atuin init zsh --disable-up-arrow)"
 eval "$(starship init zsh)"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+
+# export DRI_PRIME=1 TO USE DEDICATED GPU(ARC A350M)
+# export DRI_PRIME=0 (default)TO USE INTEGRATED GPU(iris xe)

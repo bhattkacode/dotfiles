@@ -6,8 +6,8 @@ keymap.set("x", "p", "P")
 keymap.set("n", "zM", "<cmd>%foldc<CR>", { silent = true })
 keymap.set("n", "<leader>zm", "<cmd>%foldc!<CR>", { silent = true })
 keymap.set("n", "<leader>lt", ":!xdg-open https://leetcode.com/problems/<cword><CR>")
-keymap.set("n", "<leader>tr", ":lua transparent()<CR>", { silent = true })
-keymap.set("n", "<leader>to", ":lua opaque()<CR>", { silent = true })
+keymap.set("n", "<leader>tr", ":lua Transparent()<CR>", { silent = true })
+keymap.set("n", "<leader>to", ":lua Opaque()<CR>", { silent = true })
 
 keymap.set("n", "<leader>q", 'cs"`ysa`}')
 
@@ -65,18 +65,16 @@ keymap.set({ "n", "x" }, "C", '"_C')
 
 keymap.set("v", "y", "y`>")
 keymap.set("n", "Q", "<nop>")
-keymap.set("n", "<leader>fm", "<cmd>lua vim.lsp.buf.format()<CR>")
 keymap.set("v", "/", "<esc>/\\%V")
 keymap.set("n", "<C-L>", ":vertical resize -5<CR>")
 keymap.set("n", "<C-H>", ":vertical resize +5<CR>")
-keymap.set("n", "<leader>;", "<cmd>cnext<CR>zz")
-keymap.set("n", "<leader>,", "<cmd>cprev<CR>zz")
+keymap.set("n", "<leader>'", "<cmd>cnext<CR>zz")
+keymap.set("n", "<leader>;", "<cmd>cprev<CR>zz")
 -- keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 -- keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 keymap.set("n", "<leader>rn", [[:%sno/\<<C-r><C-w>\>/<C-r><C-w>/gIc<Left><Left><Left><Left>]])
 keymap.set("v", "<leader>rn", [["hy:%sno/<C-r>h/<C-r>h/gIc<left><left><left><Left>]])
-keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nlua/sahaj/lazy.lua")
 keymap.set("n", "x", '"_x')
@@ -93,8 +91,25 @@ keymap.set({ "n", "v" }, "<C-n>", "nvgn")
 keymap.set("n", "<leader>cd", ":cd %:h<CR>", { desc = "Change cwd to buffer dir" })
 
 --plugins-keymaps
-keymap.set("n", "<leader>tc", ":TailwindConcealToggle<CR>")
 
+-- trouble
+
+keymap.set("n", "<leader>xt", "<cmd>Trouble toggle<cr>", { desc = "Close Trouble window(any)" })
+keymap.set("n", "<leader>xd", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Toggle Diagnostics" })
+keymap.set("n", "<leader>xD", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+  { desc = "Buffer Diagnostics (Trouble)" })
+keymap.set("n", "<leader>xs", "<cmd>Trouble symbols toggle<cr>", { desc = "Symbols (Trouble)" })
+keymap.set("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+  { desc = "LSP Definitions / references / ... (Trouble)" })
+keymap.set("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
+keymap.set("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
+keymap.set("n", "<leader>;", function() require("trouble").next({ jump = true, skip_groups = true }) end,
+  { desc = "Next item (Trouble)" })
+keymap.set("n", "<leader>,", function() require("trouble").prev({ jump = true, skip_groups = true }) end,
+  { desc = "Next item (Trouble)" })
+
+-- tailwind
+keymap.set("n", "<leader>tc", ":TailwindConcealToggle<CR>")
 --ccc
 keymap.set("n", "<leader>cc", ":CccPick<CR>")
 
@@ -115,7 +130,7 @@ keymap.set("n", "<leader>cmd", ":lua require('cmp').setup.buffer { enabled = fal
 keymap.set("n", "<leader>cme", ":lua require('cmp').setup.buffer { enabled = true }<CR>")
 
 local show_only_errors = false
-function toggle_diagnostics()
+function ToggleDiagnostics()
   if show_only_errors then
     vim.diagnostic.config({
       virtual_text = { severity = { min = vim.diagnostic.severity.WARN }, prefix = '•' }
@@ -131,10 +146,9 @@ function toggle_diagnostics()
   end
 end
 
-vim.keymap.set("n", "<leader>tw", toggle_diagnostics, { desc = "Toggle warnings+errors/errors" })
+vim.keymap.set("n", "<leader>tw", ToggleDiagnostics, { desc = "Toggle warnings+errors/errors" })
 
 -- telescope
-keymap.set("n", "<leader>fm", "<cmd>Telescope file_browser<cr>", { desc = "File Browser" })
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "File Browser" })
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
 keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
@@ -159,8 +173,18 @@ keymap.set('n', '<leader>fc', function()
 
 
 -- Conform
+keymap.set("n", "<leader>fm", function() require("conform").format() end, { desc = "Format(Trouble)" })
 keymap.set("n", "<leader>ct", ":ConformToggle<CR>", { desc = "Toggle Format on save" })
 keymap.set("n", "<leader>cb", ":ConformToggle!<CR>", { desc = "Toggle Format on save in current buffer" })
+keymap.set("n", "<leader>ts",
+  function()
+    local conform = require("conform")
+    conform.formatters.prettier = { prepend_args = { "--plugin=prettier-plugin-tailwindcss" } }
+    conform.format()
+    conform.formatters.prettier = { prepend_args = {} }
+  end,
+  { desc = "sorts Tailwind classes (prettier plugin)" }
+)
 
 --runners
 vim.cmd [[
