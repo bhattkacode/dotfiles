@@ -1,33 +1,136 @@
 return {
   {
-    'nvim-lualine/lualine.nvim',
+    'crispgm/nvim-tabline',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
-      options = {
-        theme = 'auto',
-        component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
+      show_icon = true,         -- show file extension icon
+      modify_indicator = '[+]', -- modify indicator
+      no_name = 'No name',      -- no name buffer name
+      brackets = { '', '' },    -- file name brackets surrounding
+
+    },
+  },
+  { 'echasnovski/mini.cursorword', opts = {} },
+
+  -- inconsistent
+  -- {
+  --   "zbirenbaum/neodim",
+  --   event = "LspAttach",
+  --   opts = {
+  --     alpha = 0.75,
+  --     blend_color = "#000000",
+  --     hide = { underline = true, virtual_text = false, signs = true },
+  --   }
+  -- },
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+    ft = { "javascriptreact", "typescriptreact" }
+  },
+  {
+    'linrongbin16/lsp-progress.nvim',
+    config = function()
+      require("lsp-progress").setup({
+        client_format = function(client_name, spinner, series_messages)
+          if #series_messages == 0 then
+            return nil
+          end
+          return {
+            name = client_name,
+            body = spinner .. " " .. table.concat(series_messages, ", "),
+          }
+        end,
+        format = function(client_messages)
+          --- @param name string
+          --- @param msg string?
+          --- @return string
+          local function stringify(name, msg)
+            return msg and string.format("%s %s", name, msg) or name
+          end
+
+          local sign = "" -- nf-fa-gear \uf013
+          local lsp_clients = vim.lsp.get_active_clients()
+          local messages_map = {}
+          for _, climsg in ipairs(client_messages) do
+            messages_map[climsg.name] = climsg.body
+          end
+
+          if #lsp_clients > 0 then
+            table.sort(lsp_clients, function(a, b)
+              return a.name < b.name
+            end)
+            local builder = {}
+            for _, cli in ipairs(lsp_clients) do
+              if
+                  type(cli) == "table"
+                  and type(cli.name) == "string"
+                  and string.len(cli.name) > 0
+              then
+                if messages_map[cli.name] then
+                  table.insert(
+                    builder,
+                    stringify(cli.name,
+                      messages_map[cli.name])
+                  )
+                else
+                  table.insert(builder, stringify(cli.name))
+                end
+              end
+            end
+            if #builder > 0 then
+              return sign .. " " .. table.concat(builder, ", ")
+            end
+          end
+          return ""
+        end,
+      })
+    end
+  },
+  {
+    'sindrets/diffview.nvim',
+    opts = {
+      win_config = {
+        position = "bottom",
+        -- width = 35,
+        -- win_opts = {},
       },
-      sections = {
-        lualine_a = { 'branch' },
-        lualine_b = { { 'filename', new_file = true, path = 1 } },
-        lualine_c = { 'diagnostics' },
-        lualine_x = { 'diff', 'filetype' },
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' }
-      },
-    }
+    },
+    cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewToggleFiles", "DiffviewFocusFiles" }
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    config = function()
+      require('lualine').setup {
+        options = {
+          theme = 'auto',
+          component_separators = { left = '', right = '' },
+          section_separators = { left = '', right = '' },
+        },
+        sections = {
+
+          lualine_a = { 'branch' },
+          lualine_b = { { 'filename', new_file = true, path = 1, shorting_target = 40 } },
+          lualine_c = { 'diagnostics' },
+          lualine_x = { function() return require('lsp-progress').progress() end, 'diff', 'filetype' },
+          lualine_y = { function() return "{.}%3{codeium#GetStatusString()}" end, 'progress' },
+          lualine_z = { 'location' }
+        },
+      }
+      vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+      vim.api.nvim_create_autocmd("User", {
+        group = "lualine_augroup",
+        pattern = "LspProgressStatusUpdated",
+        callback = require("lualine").refresh,
+      })
+    end
   },
   {
     'stevearc/oil.nvim',
     cmd = "Oil",
     opts = {},
   },
-  {
-    "folke/trouble.nvim",
-    opts = {},
-    cmd = "Trouble",
-  },
-  { "nvim-pack/nvim-spectre",                 cmd = "Spectre" },
+  { "nvim-pack/nvim-spectre",      cmd = "Spectre" },
   {
     "uga-rosa/ccc.nvim",
     config = function()
@@ -149,16 +252,16 @@ return {
       "MunifTanjim/nui.nvim",
     }
   },
-  {
-    'numToStr/Comment.nvim',
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      require('Comment').setup {
-        toggler = { line = '<leader>/', },
-        opleader = { line = '<leader>/', }
-      }
-    end
-  },
+  -- {
+  --   'numToStr/Comment.nvim',
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   config = function()
+  --     require('Comment').setup {
+  --       toggler = { line = '<leader>/', },
+  --       opleader = { line = '<leader>/', }
+  --     }
+  --   end
+  -- },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -188,9 +291,18 @@ return {
     main = "ibl",
     opts = {},
     config = function()
-      require("ibl").setup {
-        scope = { enabled = false, highlight = { "WarningMsg" }, show_start = false, show_end = false },
-      }
+      -- create autocmd when buffenter
+      vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function()
+          require("ibl").setup {
+            scope = {
+              enabled = true,
+              highlight = { "IblScope" },
+              show_start = false
+            },
+          }
+        end,
+      })
     end,
   },
   { "mbbill/undotree" },

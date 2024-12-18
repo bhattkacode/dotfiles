@@ -41,11 +41,11 @@
       "tooltip": true,
       "exec": "~/.config/waybar/scripts/caway -b 10",
       "return-type": "json",
-      "on-click": "playerctl play-pause -p spotube, %any",
-      "on-scroll-up": "playerctl previous -p spotube",
-      "on-scroll-down": "playerctl next -p spotube",
-      "on-click-right": "spotube",
-      "max-length": 20
+      "on-click": "playerctl play-pause -p spotify %any",
+      "on-scroll-up": "playerctl previous -p spotify",
+      "on-scroll-down": "playerctl next -p spotify",
+      "on-click-right": "spotify",
+      "max-length": 15
     },
     "pulseaudio/slider": {
       "min": 0,
@@ -134,6 +134,7 @@
     "return-type": "json",
     "exec": "~/.config/waybar/scripts/dunst.sh",
     "on-click": "dunstctl set-paused toggle",
+    "on-click-right": "dunstctl history-pop",
     "format": "{}"
   },
   "custom/easyeffects": {

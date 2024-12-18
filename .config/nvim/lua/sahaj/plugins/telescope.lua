@@ -1,6 +1,5 @@
 return {
   "nvim-telescope/telescope.nvim",
-
   dependencies = { 'nvim-lua/plenary.nvim',
     {
       'nvim-telescope/telescope-fzf-native.nvim',
@@ -12,7 +11,7 @@ return {
   config = function()
     -- import telescope plugin safely
     local telescope = require("telescope")
-    local builtin = require('telescope.builtin')
+    -- local builtin = require('telescope.builtin')
 
     local select_one_or_multi = function(prompt_bufnr)
       local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
@@ -30,6 +29,23 @@ return {
     end
 
     telescope.setup {
+      pickers = {
+        live_grep = {
+          file_ignore_patterns = { 'node_modules', '.git', '.venv', '.*history', '.*cache', 'package-lock*' },
+          additional_args = {
+            "--hidden", -- search hidden files
+            -- "--fixed-strings" -- disable regex
+          }
+        },
+        grep_string = {
+          file_ignore_patterns = { 'node_modules', '.git', '.venv', '.*history', '.*cache' },
+          additional_args = { "--hidden" } -- regex already disabled
+        },
+        find_files = {
+          file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+          hidden = true
+        }
+      },
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
@@ -76,21 +92,21 @@ return {
           height = 0.80,
           preview_cutoff = 120,
         },
+        preview = { filesize_limit = 1 },
         winblend = 0,
         border = {},
         borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         color_devicons = true,
         buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
         mappings = {
-          i = { ["<c-t>"] = require("trouble.sources.telescope").open },
+          -- i = { ["<c-t>"] = require("trouble.sources.telescope").open },
           n = {
-            ["<c-t>"] = require("trouble.sources.telescope").open,
+            -- ["<c-t>"] = require("trouble.sources.telescope").open,
             ['<CR>'] = select_one_or_multi,
           },
         },
       },
-      -- To get fzf loaded and working with telescope, you need to call
-      -- load_extension, somewhere after setup function:
-      telescope.load_extension('fzf') }
+    }
+    telescope.load_extension('fzf')
   end,
 }

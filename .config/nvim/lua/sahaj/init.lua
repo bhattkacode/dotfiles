@@ -24,8 +24,8 @@ require("lazy").setup({
   change_detection = { notify = false, },
 })
 
-vim.cmd [[colorscheme catppuccin]]
-vim.cmd [[hi LocalHighlight guibg=#2a2b3c guifg=none]]
+vim.cmd [[colorscheme catppuccin
+]]
 
 -- vim.g.codeium_enabled = false
 vim.opt.showmode = false
@@ -34,50 +34,66 @@ vim.opt.signcolumn = 'auto'
 
 -- Transparent 󰈸󰈸
 function Transparent()
+  vim.g.transparent = true
   vim.cmd [[colorscheme catppuccin
-    hi Normal guibg=none ctermbg=none
-    hi NormalFloat guibg=none ctermbg=none
-    " hi LineNr guibg=none ctermbg=none
-    hi Folded guibg=none ctermbg=none
-    hi NonText guibg=none ctermbg=none
-    hi SpecialKey guibg=none ctermbg=none
-    hi VertSplit guibg=none ctermbg=none
-    " hi SignColumn guibg=none ctermbg=none
-    hi EndOfBuffer guibg=none ctermbg=none
-    " hi CursorLine guibg=none
-    hi StatusLine none
-    hi NormalNC guibg=none ctermbg=none
-    hi TelescopePreviewNormal none
-    hi TelescopePreviewBorder none
-    hi TelescopeResultNormal none
-    hi TelescopeResultBorder none
-    hi TelescopePromptNormal none
-    hi TelescopePromptBorder none
-    hi TelescopePromptPrefix none
-    hi TelescopeSelection none
-    hi DiagnosticVirtualTextWarn none
-    hi DiagnosticVirtualTextError none
-    hi DiagnosticVirtualTextInfo none
-    hi DiagnosticVirtualTextHint none
-    hi LocalHighlight guibg=none gui=underline
-    " hi FoldIcon guibg=#cba6f7 guifg=#1e1e2e gui=bold
-    hi FoldIcon guibg=#f9e2af guifg=#1e1e2e gui=bold
+  hi lualine_c_normal guibg=none
+  hi lualine_x_normal guibg=none
+  hi Normal guibg=none ctermbg=none
+  hi NormalFloat guibg=none ctermbg=none
+  " hi LineNr guibg=none ctermbg=none
+  hi Folded guibg=none ctermbg=none
+  hi NonText guibg=none ctermbg=none
+  hi SpecialKey guibg=none ctermbg=none
+  hi VertSplit guibg=none ctermbg=none
+  " hi SignColumn guibg=none ctermbg=none
+  hi EndOfBuffer guibg=none ctermbg=none
+  hi CursorLine guibg=none
+  hi StatusLine none
+  hi NormalNC guibg=none ctermbg=none
+  hi TelescopePreviewNormal none
+  hi TelescopePreviewBorder none
+  hi TelescopeResultNormal none
+  hi TelescopeResultBorder none
+  hi TelescopePromptNormal none
+  hi TelescopePromptBorder none
+  hi TelescopePromptPrefix none
+  hi TelescopeSelection none
+  hi DiagnosticVirtualTextWarn none
+  hi DiagnosticVirtualTextError none
+  hi DiagnosticVirtualTextInfo none
+  hi DiagnosticVirtualTextHint none
+  " hi LocalHighlight guibg=none gui=underline
+  " hi MiniCursorword guibg=none cterm=none guibg=none
+  hi MiniCursorwordCurrent guibg=none cterm=none gui=none
+  " hi FoldIcon guibg=#cba6f7 guifg=#1e1e2e gui=bold
+  hi FoldIcon guibg=#f9e2af guifg=#1e1e2e gui=bold
+  hi IblScope guifg=#585b70
+  hi TabLineSel guibg=#a6e3a1 guifg=#11111b
+  hi TabLine  guifg=#cdd6f4
   ]]
+  vim.g.minicursorword_disable = true
   -- enabled bordered completion menu
   -- local cmp = require("cmp")
   -- cmp.setup({ window = { completion = cmp.config.window.bordered({}) } })
 end
 
 function Opaque()
+  vim.g.minicursorword_disable = false
+  vim.g.transparent = false
   vim.cmd [[ colorscheme catppuccin
-    hi LocalHighlight guibg=#2a2b3c guifg=none
-    " hi CursorLine guibg=#181825
-    " hi SignColumn guibg=#181825
-    " hi CursorLineNr guibg=#181825
-    " hi LineNr guibg=#181825
-    hi Folded guibg=#313244
-    hi FoldIcon guibg=#3d382a guifg=#f9e2af gui=bold
-    " hi FoldIcon guibg=#cba6f7 guifg=#1e1e2e gui=bold
+  " hi LocalHighlight guibg= guifg=none
+  hi MiniCursorword guibg=#2a2c37 cterm=none gui=none
+  hi MiniCursorwordCurrent guibg=none cterm=none gui=none
+  " hi CursorLine guibg=#181825
+  " hi SignColumn guibg=#181825
+  " hi CursorLineNr guibg=#181825
+  " hi LineNr guibg=#181825
+  hi Folded guibg=#313244
+  hi FoldIcon guibg=#3d382a guifg=#f9e2af gui=bold
+  " hi FoldIcon guibg=#cba6f7 guifg=#1e1e2e gui=bold
+  hi IblScope guifg=#585b70
+  hi TabLineSel guibg=#a6e3a1 guifg=#11111b
+  hi TabLine  guifg=#cdd6f4
   ]]
 
   --Telescope Colours
@@ -113,9 +129,10 @@ function Opaque()
   -- })
 end
 
-Opaque()
+-- Opaque()
+Transparent()
 
-vim.cmd [[let g:buftabline_show = 1]]
+-- vim.g.buftabline_show = 1
 
 vim.opt.guicursor = {
   "n-v-c:block-Cursor",
@@ -173,6 +190,8 @@ vim.opt.cursorline = true
 
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.iskeyword:append("-")
+
+vim.opt.nrformats:append("unsigned")
 
 -- folds
 vim.opt.foldmethod = "expr"
@@ -281,21 +300,20 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
-local codeiumString = " {.}%3{codeium#GetStatusString()}"
-
-vim.o.statusline = " "
-    .. "  "
-    .. " %F"
-    .. " %#StatusModified#"
-    .. " %m"
-    .. " %#StatusNorm#"
-    .. "%="
-    .. "%y"
-    .. " %#StatusBuffer#"
-    .. "  "
-    .. "%n"
-    .. "%#StatusLocation#"
-    .. " %l,%c"
-    .. " %#StatusPercent#"
-    .. " %p%%  "
-    .. codeiumString
+-- local codeiumString = " {.}%3{codeium#GetStatusString()}"
+-- vim.o.statusline = " "
+--     .. "  "
+--     .. " %F"
+--     .. " %#StatusModified#"
+--     .. " %m"
+--     .. " %#StatusNorm#"
+--     .. "%="
+--     .. "%y"
+--     .. " %#StatusBuffer#"
+--     .. "  "
+--     .. "%n"
+--     .. "%#StatusLocation#"
+--     .. " %l,%c"
+--     .. " %#StatusPercent#"
+--     .. " %p%%  "
+--     .. codeiumString

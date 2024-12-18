@@ -42,22 +42,28 @@ function vibes() {
   nohup wayvibes ~/Downloads/creamy -v $1 &
 }
 
-function rm() {
-  arg=$1;
-  if [[ "$arg" == "-r" || "$arg" == "-rf" || "$arg" == "-fr" ]]; then
-    if [ -z "$2" ]; then
-      echo "No file specified"
-      return 1
-    else
-      arg=$2
-    fi
-  fi
-  mv $arg ~/.local/share/Trash/files/
-  echo "[Trash Info]" > ~/.local/share/Trash/info/$arg.trashinfo
-  echo "Path=$(readlink -f $arg)" >> ~/.local/share/Trash/info/$arg.trashinfo
-  echo "DeletionDate=$(date +%Y-%m-%dT%H:%M:%S)" >> ~/.local/share/Trash/info/$arg.trashinfo
-}
+# function rm() {
+#   arg=$1;
+#   if [[ "$arg" == "-rff" ]]; then
+#     rm -rf $2
+#     return
+#   fi
+#   if [[ "$arg" == "-r" || "$arg" == "-rf" || "$arg" == "-fr" ]]; then
+#     if [ -z "$2" ]; then
+#       echo "No file specified"
+#       return 1
+#     else
+#       arg=$2
+#     fi
+#   fi
+#   mv "$arg" ~/.local/share/Trash/files/
+#   echo "[Trash Info]" > "~/.local/share/Trash/info/$arg.trashinfo"
+#   echo "Path=$(readlink -f $arg)" >> "~/.local/share/Trash/info/$arg.trashinfo"
+#   echo "DeletionDate=$(date +%Y-%m-%dT%H:%M:%S)" >> "~/.local/share/Trash/info/$arg.trashinfo"
+# }
 
+alias tp="trash-put"
+alias rm="echo hell naw bro"
 alias dunstHist="dunstctl history | jq '.data[0][] | .summary.data + \": \" + .body.data' -r"
 alias demn=~/demn/demn.py
 alias refl="reflector -c India >> /etc/pacman.d/mirrorlist && reflector >> /etc/pacman.d/mirrorlist"
@@ -70,7 +76,7 @@ alias lnsync='LBsync.sh && notesync'
 alias nvn='cd ~/notes && nv -c "Telescope find_files"'
 alias notesync='cd ~/notes && git add . && git commit -m "notes backup" && git push'
 alias unimatrix='unimatrix -n -s 96 -l o'
-alias ls='ls -a --group-directories-first --color=always'
+alias ls='eza --icons --group-directories-first'
 alias nv='nvim'
 alias v='vim'
 alias nvsu='sudo -E -s nvim'
@@ -240,8 +246,11 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 
 eval "$(atuin init zsh --disable-up-arrow)"
-eval "$(starship init zsh)"
+
+type starship_zle-keymap-select >/dev/null || eval "$(starship init zsh)"
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
 # export DRI_PRIME=1 TO USE DEDICATED GPU(ARC A350M)
 # export DRI_PRIME=0 (default)TO USE INTEGRATED GPU(iris xe)
+
+export PATH=$PATH:/home/sahaj/.spicetify

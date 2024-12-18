@@ -180,9 +180,9 @@ return {
       -- DIAGNOSTICS
 
       vim.diagnostic.config({
-        underline = {
-          severity = { min = vim.diagnostic.severity.ERROR }
-        },
+        -- underline = {
+        -- severity = { min = vim.diagnostic.severity.ERROR }
+        -- },
         virtual_text = {
           severity = { min = vim.diagnostic.severity.WARN },
           -- severity = { min = vim.diagnostic.severity.ERROR },
@@ -290,13 +290,12 @@ return {
       "onsails/lspkind-nvim",
     },
     config = function()
-      -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
-      local ELLIPSIS_CHAR = '…'
-      local MAX_LABEL_WIDTH = 20
-      local MIN_LABEL_WIDTH = 20
+      -- local ELLIPSIS_CHAR = '…'
+      -- local MAX_LABEL_WIDTH = 20
+      -- local MIN_LABEL_WIDTH = 20
 
       local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
@@ -304,13 +303,13 @@ return {
         'confirm_done',
         cmp_autopairs.on_confirm_done()
       )
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and
-            vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") ==
-            nil
-      end
+      -- local has_words_before = function()
+      --   unpack = unpack or table.unpack
+      --   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      --   return col ~= 0 and
+      --       vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") ==
+      --       nil
+      -- end
       cmp.setup {
         snippet = {
           expand = function(args)

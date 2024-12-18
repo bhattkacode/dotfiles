@@ -14,7 +14,7 @@ truncation_length = 2
 
 [character]
 success_symbol = '[❯](bold pink)'
-vimcmd_symbol = '[❮](bold pink)'
+vimcmd_symbol = '[⁍](bold pink)'
 
 [git_branch]
 format =  '[$symbol$branch(:$remote_branch)]($style)'

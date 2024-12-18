@@ -52,9 +52,9 @@ window#waybar {
 #workspaces button.urgent {
     color: @crust;
     /* background: linear-gradient(45deg, @mauve, @sapphire); */
-    background: @lavender;
-    min-width: 40px;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: @red;
+    /* min-width: 40px; */
+    transition: all 0.3s;
 }
 
 #workspaces button:hover {
@@ -245,13 +245,10 @@ window#waybar {
 
 #custom-music.Paused,
 #custom-music.Stopped {
-  background: @surface0;
+  background: @mantle;
   color: @blue;
 }
 
-
-/* =============================== */
-/* Music/PlayerCTL Module */
 #custom-music {
   color: @blue;
   border-radius: 10px;
